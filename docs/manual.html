@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FunnelSim Setup Manual</title>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --bg-tertiary: #1a1a24;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --border: #2d2d3d;
+            --purple: #7c3aed;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        nav {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+            border: 1px solid var(--border);
+        }
+
+        nav h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        nav ol {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+            padding-left: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h2 .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1rem;
+            margin: 1.25rem 0 0.75rem;
+            color: var(--accent);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        code {
+            background: var(--bg-tertiary);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+            color: var(--accent);
+        }
+
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-primary);
+        }
+
+        .info-box {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .warning-box {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .success-box {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .error-box {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--error);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .purple-box {
+            background: rgba(124, 58, 237, 0.1);
+            border-left: 4px solid var(--purple);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .info-box strong, .warning-box strong, .success-box strong, .error-box strong, .purple-box strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        td {
+            color: var(--text-secondary);
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .button {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .button:hover {
+            background: var(--accent-hover);
+            text-decoration: none;
+        }
+
+        .lifetime-badge {
+            display: inline-block;
+            background: var(--purple);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            pre {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>FunnelSim Setup Manual</h1>
+            <p>Complete guide to deploying your own funnel simulation platform</p>
+        </header>
+
+        <nav>
+            <h2>Table of Contents</h2>
+            <ol>
+                <li><a href="#prerequisites">Prerequisites</a></li>
+                <li><a href="#clone-install">Clone & Install</a></li>
+                <li><a href="#supabase-setup">Supabase Setup</a></li>
+                <li><a href="#database-setup">Database Setup</a></li>
+                <li><a href="#stripe-setup">Stripe Setup</a></li>
+                <li><a href="#lifetime-pricing">Configuring Lifetime Pricing</a></li>
+                <li><a href="#edge-functions">Edge Functions</a></li>
+                <li><a href="#env-config">Environment Configuration</a></li>
+                <li><a href="#admin-setup">Admin Setup</a></li>
+                <li><a href="#products">Adding Products</a></li>
+                <li><a href="#whitelabel">Whitelabel Branding</a></li>
+                <li><a href="#deployment">Deployment</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+            </ol>
+        </nav>
+
+        <!-- Section 1: Prerequisites -->
+        <section id="prerequisites">
+            <h2><span class="step-number">1</span> Prerequisites</h2>
+
+            <p>Before you begin, ensure you have the following installed and accounts created:</p>
+
+            <h3>Required Software</h3>
+            <ul>
+                <li><strong>Node.js v18+</strong> - <a href="https://nodejs.org" target="_blank">Download here</a></li>
+                <li><strong>npm</strong> - Comes with Node.js</li>
+                <li><strong>Git</strong> - <a href="https://git-scm.com" target="_blank">Download here</a></li>
+                <li><strong>Supabase CLI</strong> - For database migrations and edge functions</li>
+            </ul>
+
+            <h3>Required Accounts</h3>
+            <ul>
+                <li><strong>Supabase Account</strong> - <a href="https://supabase.com" target="_blank">Create free account</a></li>
+                <li><strong>Stripe Account</strong> - <a href="https://stripe.com" target="_blank">Create account</a></li>
+                <li><strong>Email Configuration</strong> - Supabase handles auth emails (password reset, email verification). Optionally configure custom SMTP in Supabase Dashboard for branded emails.</li>
+            </ul>
+
+            <h3>Install Supabase CLI</h3>
+            <pre><code># macOS
+brew install supabase/tap/supabase
+
+# Windows (using Scoop)
+scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
+scoop install supabase
+
+# Or using npm (all platforms)
+npm install -g supabase</code></pre>
+        </section>
+
+        <!-- Section 2: Clone & Install -->
+        <section id="clone-install">
+            <h2><span class="step-number">2</span> Clone & Install</h2>
+
+            <h3>Clone the Repository</h3>
+            <pre><code>git clone https://github.com/your-username/funnelsim.git
+cd funnelsim</code></pre>
+
+            <h3>Install Dependencies</h3>
+            <pre><code>npm install</code></pre>
+
+            <h3>Copy Environment File</h3>
+            <pre><code>cp .env.example .env</code></pre>
+
+            <div class="info-box">
+                <strong>Note</strong>
+                <p>Don't start the dev server yet - you need to configure Supabase and Stripe first.</p>
+            </div>
+        </section>
+
+        <!-- Section 3: Supabase Setup -->
+        <section id="supabase-setup">
+            <h2><span class="step-number">3</span> Supabase Setup</h2>
+
+            <h3>Create a New Project</h3>
+            <ol>
+                <li>Go to <a href="https://supabase.com/dashboard" target="_blank">Supabase Dashboard</a></li>
+                <li>Click <strong>"New Project"</strong></li>
+                <li>Enter project name (e.g., "funnelsim")</li>
+                <li>Set a strong database password (save this!)</li>
+                <li>Select your preferred region</li>
+                <li>Click <strong>"Create new project"</strong></li>
+            </ol>
+
+            <h3>Get Your API Keys</h3>
+            <ol>
+                <li>Go to <strong>Project Settings</strong> (gear icon)</li>
+                <li>Click <strong>API</strong> in the sidebar</li>
+                <li>Copy these values:
+                    <ul>
+                        <li><strong>Project URL</strong> - Your Supabase URL</li>
+                        <li><strong>anon/public key</strong> - Your publishable key</li>
+                        <li><strong>Project Reference ID</strong> - Found in the URL or General settings</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Link Supabase CLI to Your Project</h3>
+            <pre><code># Login to Supabase
+supabase login
+
+# Link your project
+supabase link --project-ref YOUR_PROJECT_ID</code></pre>
+
+            <div class="info-box">
+                <strong>Finding Your Project ID</strong>
+                <p>Your project ID is in the URL: <code>https://supabase.com/dashboard/project/<strong>YOUR_PROJECT_ID</strong></code></p>
+            </div>
+        </section>
+
+        <!-- Section 4: Database Setup -->
+        <section id="database-setup">
+            <h2><span class="step-number">4</span> Database Setup</h2>
+
+            <h3>Run Database Migrations</h3>
+            <p>The project includes all necessary database migrations. Push them to your Supabase project:</p>
+            <pre><code>supabase db push</code></pre>
+
+            <p>This will create the following tables:</p>
+            <table>
+                <tr>
+                    <th>Table</th>
+                    <th>Purpose</th>
+                </tr>
+                <tr>
+                    <td><code>profiles</code></td>
+                    <td>User profile data</td>
+                </tr>
+                <tr>
+                    <td><code>funnels</code></td>
+                    <td>Funnel designs and node data</td>
+                </tr>
+                <tr>
+                    <td><code>subscription_tiers</code></td>
+                    <td>Available subscription plans (including lifetime pricing)</td>
+                </tr>
+                <tr>
+                    <td><code>user_subscriptions</code></td>
+                    <td>User subscription status (includes is_lifetime flag)</td>
+                </tr>
+                <tr>
+                    <td><code>admin_users</code></td>
+                    <td>Admin role assignments</td>
+                </tr>
+                <tr>
+                    <td><code>whitelabel_config</code></td>
+                    <td>Branding configuration</td>
+                </tr>
+                <tr>
+                    <td><code>pending_subscriptions</code></td>
+                    <td>Stores purchases made before account creation (unauthenticated checkout)</td>
+                </tr>
+            </table>
+
+            <h3>Create Storage Bucket</h3>
+            <ol>
+                <li>Go to <strong>Storage</strong> in your Supabase dashboard</li>
+                <li>Click <strong>"New bucket"</strong></li>
+                <li>Name it <code>funnel-logos</code></li>
+                <li>Check <strong>"Public bucket"</strong></li>
+                <li>Click <strong>"Create bucket"</strong></li>
+            </ol>
+
+            <h3>Set Storage Policies</h3>
+            <p>Click on the <code>funnel-logos</code> bucket, then <strong>Policies</strong>, and add:</p>
+
+            <h4>Policy 1: Public Read</h4>
+            <pre><code>-- Allow public read access
+CREATE POLICY "Public read access"
+ON storage.objects FOR SELECT
+USING (bucket_id = 'funnel-logos');</code></pre>
+
+            <h4>Policy 2: Authenticated Upload</h4>
+            <pre><code>-- Allow authenticated users to upload
+CREATE POLICY "Authenticated users can upload"
+ON storage.objects FOR INSERT
+WITH CHECK (
+    bucket_id = 'funnel-logos'
+    AND auth.role() = 'authenticated'
+);</code></pre>
+        </section>
+
+        <!-- Section 5: Stripe Setup -->
+        <section id="stripe-setup">
+            <h2><span class="step-number">5</span> Stripe Setup</h2>
+
+            <h3>Get Your API Keys</h3>
+            <ol>
+                <li>Go to <a href="https://dashboard.stripe.com/test/apikeys" target="_blank">Stripe Dashboard > Developers > API keys</a></li>
+                <li>Copy your <strong>Publishable key</strong> (starts with <code>pk_test_</code>)</li>
+                <li>Copy your <strong>Secret key</strong> (starts with <code>sk_test_</code>)</li>
+            </ol>
+
+            <div class="warning-box">
+                <strong>Test vs Live Keys</strong>
+                <p>Use <code>pk_test_</code> and <code>sk_test_</code> keys for development. Switch to <code>pk_live_</code> and <code>sk_live_</code> only when going to production.</p>
+            </div>
+
+            <h3>Create Products in Stripe</h3>
+            <p>Go to <a href="https://dashboard.stripe.com/test/products" target="_blank">Products</a> and create your subscription tiers:</p>
+
+            <h4>Product 1: Pro Plan</h4>
+            <ol>
+                <li>Click <strong>"Add product"</strong></li>
+                <li>Name: <code>Pro Plan</code></li>
+                <li>Add prices:
+                    <ul>
+                        <li>Monthly: $29/month (recurring)</li>
+                        <li>Yearly: $290/year (recurring)</li>
+                        <li>Lifetime: $499 one-time (optional - see <a href="#lifetime-pricing">Lifetime Pricing</a>)</li>
+                    </ul>
+                </li>
+                <li>Save and copy all <strong>Price IDs</strong> (start with <code>price_</code>)</li>
+            </ol>
+
+            <h4>Product 2: Enterprise Plan</h4>
+            <ol>
+                <li>Click <strong>"Add product"</strong></li>
+                <li>Name: <code>Enterprise Plan</code></li>
+                <li>Add prices:
+                    <ul>
+                        <li>Monthly: $99/month (recurring)</li>
+                        <li>Yearly: $990/year (recurring)</li>
+                        <li>Lifetime: $1,499 one-time (optional)</li>
+                    </ul>
+                </li>
+                <li>Save and copy all <strong>Price IDs</strong></li>
+            </ol>
+
+            <h3>Create Webhook Endpoint</h3>
+            <ol>
+                <li>Go to <a href="https://dashboard.stripe.com/test/webhooks" target="_blank">Developers > Webhooks</a></li>
+                <li>Click <strong>"Add endpoint"</strong></li>
+                <li>Enter your endpoint URL:
+                    <pre><code>https://YOUR_PROJECT_ID.supabase.co/functions/v1/stripe-webhook</code></pre>
+                </li>
+                <li>Select events to listen for:
+                    <ul>
+                        <li><code>checkout.session.completed</code></li>
+                        <li><code>customer.subscription.updated</code></li>
+                        <li><code>customer.subscription.deleted</code></li>
+                        <li><code>charge.refunded</code></li>
+                        <li><code>invoice.payment_failed</code></li>
+                    </ul>
+                </li>
+                <li>Click <strong>"Add endpoint"</strong></li>
+                <li>Copy the <strong>Signing secret</strong> (starts with <code>whsec_</code>)</li>
+            </ol>
+        </section>
+
+        <!-- Section 6: Configuring Lifetime Pricing (NEW) -->
+        <section id="lifetime-pricing">
+            <h2><span class="step-number">6</span> Configuring Lifetime Pricing <span class="lifetime-badge">NEW</span></h2>
+
+            <p>Lifetime pricing allows users to make a one-time payment for permanent access to a subscription tier. This is ideal for:</p>
+            <ul>
+                <li>Special promotions and product launches</li>
+                <li>AppSumo-style lifetime deals</li>
+                <li>Customers who prefer one-time payments over subscriptions</li>
+            </ul>
+
+            <div class="purple-box">
+                <strong>How It Works</strong>
+                <p>Lifetime purchases use Stripe's <code>payment</code> mode instead of <code>subscription</code> mode. The user pays once and gets permanent access with no recurring billing.</p>
+            </div>
+
+            <h3>Step 1: Create One-Time Price in Stripe</h3>
+            <ol>
+                <li>Go to <a href="https://dashboard.stripe.com/products" target="_blank">Stripe Dashboard > Products</a></li>
+                <li>Select the product you want to add lifetime pricing to (e.g., Pro Plan)</li>
+                <li>Click <strong>"Add another price"</strong></li>
+                <li>Configure the price:
+                    <ul>
+                        <li>Pricing model: <strong>Standard pricing</strong></li>
+                        <li>Price: Your lifetime price (e.g., $499)</li>
+                        <li>Billing period: <strong>One time</strong> (NOT recurring)</li>
+                    </ul>
+                </li>
+                <li>Click <strong>"Add price"</strong></li>
+                <li>Copy the new Price ID (starts with <code>price_</code>)</li>
+            </ol>
+
+            <div class="warning-box">
+                <strong>Important</strong>
+                <p>Make sure you select <strong>"One time"</strong> for the billing period, not "Recurring". Lifetime prices must be one-time payments.</p>
+            </div>
+
+            <h3>Step 2: Add Lifetime Price ID in Admin Panel</h3>
+            <ol>
+                <li>Go to <strong>Admin > Products</strong> in your FunnelSim app</li>
+                <li>Click <strong>Edit</strong> on the tier you want to update</li>
+                <li>In the <strong>Pricing</strong> section, enter the lifetime price (e.g., 499)</li>
+                <li>In the <strong>Stripe Configuration</strong> section, paste the Price ID in <strong>"Lifetime Price ID"</strong></li>
+                <li>Click <strong>"Save Changes"</strong></li>
+            </ol>
+
+            <h3>How the Webhook Processes Lifetime Purchases</h3>
+            <p>When a user completes a lifetime checkout, the following happens:</p>
+            <ol>
+                <li>Stripe fires a <code>checkout.session.completed</code> event with <code>mode: "payment"</code></li>
+                <li>The webhook identifies this as a lifetime purchase via the session metadata</li>
+                <li>It looks up the tier using <code>stripe_price_id_lifetime</code></li>
+                <li>Creates/updates the user subscription with:
+                    <ul>
+                        <li><code>is_lifetime: true</code></li>
+                        <li><code>status: "active"</code></li>
+                        <li><code>current_period_end: "2099-12-31"</code> (effectively never expires)</li>
+                        <li><code>stripe_subscription_id: null</code> (no recurring subscription)</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Comparison: Recurring vs Lifetime</h3>
+            <table>
+                <tr>
+                    <th>Aspect</th>
+                    <th>Recurring Subscription</th>
+                    <th>Lifetime Purchase</th>
+                </tr>
+                <tr>
+                    <td>Stripe Mode</td>
+                    <td><code>subscription</code></td>
+                    <td><code>payment</code></td>
+                </tr>
+                <tr>
+                    <td>Billing</td>
+                    <td>Monthly or yearly</td>
+                    <td>One-time</td>
+                </tr>
+                <tr>
+                    <td>Subscription ID</td>
+                    <td>Created by Stripe</td>
+                    <td>None (null)</td>
+                </tr>
+                <tr>
+                    <td>Expiration</td>
+                    <td>End of billing period</td>
+                    <td>December 31, 2099</td>
+                </tr>
+                <tr>
+                    <td>Customer Portal</td>
+                    <td>Cancel/modify options</td>
+                    <td>Billing history only</td>
+                </tr>
+                <tr>
+                    <td>UI Badge</td>
+                    <td>Green "Active"</td>
+                    <td>Purple "Lifetime"</td>
+                </tr>
+            </table>
+
+            <h3>User Experience</h3>
+            <p>For users with lifetime subscriptions:</p>
+            <ul>
+                <li>They see a <strong style="color: var(--purple);">purple "Lifetime" badge</strong> instead of "Active"</li>
+                <li>The renewal date shows <strong>"Lifetime access - never expires"</strong> instead of a date</li>
+                <li>They can still access the Customer Portal for billing history</li>
+                <li>They cannot be "canceled" since there's no recurring billing</li>
+            </ul>
+
+            <h3>Processing Refunds</h3>
+            <p>When you refund a lifetime purchase in Stripe:</p>
+            <ol>
+                <li>The webhook receives a <code>charge.refunded</code> event</li>
+                <li>The user's subscription status is set to <code>refunded</code></li>
+                <li>They are downgraded to the Free tier</li>
+                <li>The <code>is_lifetime</code> flag is cleared</li>
+            </ol>
+
+            <div class="info-box">
+                <strong>Tip: Test Lifetime Flow</strong>
+                <p>Use Stripe's test card <code>4242 4242 4242 4242</code> to complete a lifetime purchase and verify the webhook correctly sets <code>is_lifetime: true</code> in your database.</p>
+            </div>
+        </section>
+
+        <!-- Section 7: Edge Functions -->
+        <section id="edge-functions">
+            <h2><span class="step-number">7</span> Edge Functions</h2>
+
+            <h3>Set Edge Function Secrets</h3>
+            <p>Configure your Stripe keys as secrets for the edge functions:</p>
+            <pre><code># Set Stripe secret key
+supabase secrets set STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
+
+# Set Stripe webhook secret
+supabase secrets set STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret</code></pre>
+
+            <h3>Email Configuration (Optional)</h3>
+            <p>Supabase handles all authentication emails (password reset, email verification) by default. However, for a professional appearance, you should configure custom SMTP:</p>
+
+            <h4>Option A: Supabase Built-in (Default)</h4>
+            <p>Works out of the box but emails come from <code>noreply@mail.app.supabase.io</code>. Suitable for testing and small deployments.</p>
+
+            <h4>Option B: Custom SMTP (Recommended for Production)</h4>
+            <ol>
+                <li>Go to <a href="https://supabase.com/dashboard" target="_blank">Supabase Dashboard</a> → Authentication → SMTP Settings</li>
+                <li>Enable "Custom SMTP"</li>
+                <li>Enter your SMTP provider credentials:
+                    <ul>
+                        <li><strong>Sender email</strong>: noreply@yourdomain.com</li>
+                        <li><strong>Sender name</strong>: YourBrand</li>
+                        <li><strong>Host</strong>: Your SMTP server (e.g., smtp.sendgrid.net)</li>
+                        <li><strong>Port</strong>: Usually 587 for TLS</li>
+                        <li><strong>Username/Password</strong>: Your SMTP credentials</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <div class="info-box">
+                <strong>Popular SMTP Providers</strong>
+                <ul>
+                    <li><strong>SendGrid</strong> - Free tier: 100 emails/day</li>
+                    <li><strong>Mailgun</strong> - Free tier: 5,000 emails/month for 3 months</li>
+                    <li><strong>Amazon SES</strong> - Very low cost, requires AWS account</li>
+                    <li><strong>Elastic Email</strong> - Free tier: 100 emails/day</li>
+                    <li><strong>Resend</strong> - Free tier: 3,000 emails/month</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>Important: Configure Site URL First!</strong>
+                <p>Before testing emails, make sure your Site URL is configured correctly in Supabase Dashboard → Authentication → URL Configuration. Otherwise, email links will point to <code>localhost</code> instead of your production URL.</p>
+            </div>
+
+            <h3>Deploy Edge Functions</h3>
+            <pre><code># Deploy all edge functions
+supabase functions deploy
+
+# Or deploy individually
+supabase functions deploy create-checkout-session --no-verify-jwt
+supabase functions deploy create-portal-session --no-verify-jwt
+supabase functions deploy stripe-webhook --no-verify-jwt
+supabase functions deploy retrieve-checkout-session --no-verify-jwt
+supabase functions deploy link-pending-subscription --no-verify-jwt
+supabase functions deploy admin-create-user
+supabase functions deploy admin-delete-user
+supabase functions deploy admin-reset-password</code></pre>
+
+            <div class="warning-box">
+                <strong>Important: --no-verify-jwt Flag</strong>
+                <p>The Stripe webhook function must use <code>--no-verify-jwt</code> because Stripe sends requests directly, not through your app with a JWT token. Other public endpoints like checkout also need this flag.</p>
+            </div>
+
+            <h3>Verify Deployment</h3>
+            <pre><code># List deployed functions
+supabase functions list
+
+# Check function logs
+supabase functions logs stripe-webhook</code></pre>
+        </section>
+
+        <!-- Section 8: Environment Configuration -->
+        <section id="env-config">
+            <h2><span class="step-number">8</span> Environment Configuration</h2>
+
+            <h3>Configure Your .env File</h3>
+            <p>Edit your <code>.env</code> file with your actual values:</p>
+            <pre><code># Supabase Configuration (Required)
+VITE_SUPABASE_PROJECT_ID="your-project-id"
+VITE_SUPABASE_PUBLISHABLE_KEY="your-anon-key"
+VITE_SUPABASE_URL="https://your-project-id.supabase.co"
+
+# Stripe Configuration (Required)
+VITE_STRIPE_PUBLISHABLE_KEY="pk_test_your_stripe_publishable_key"
+
+# Whitelabel Branding (Optional)
+VITE_BRAND_NAME="YourBrand"
+VITE_BRAND_TAGLINE="Your tagline here"
+VITE_PRIMARY_COLOR="#6366f1"
+VITE_LOGO_URL=""
+VITE_LOGO_DARK_URL=""
+VITE_FAVICON_URL=""</code></pre>
+
+            <h3>Start Development Server</h3>
+            <pre><code>npm run dev</code></pre>
+
+            <p>Your app should now be running at <code>http://localhost:8080</code></p>
+
+            <div class="success-box">
+                <strong>Checkpoint</strong>
+                <p>You should now be able to sign up, create funnels, and view the landing page. Subscriptions require the admin setup in the next step.</p>
+            </div>
+        </section>
+
+        <!-- Section 9: Admin Setup -->
+        <section id="admin-setup">
+            <h2><span class="step-number">9</span> Admin Setup</h2>
+
+            <h3>Create Your First Admin User</h3>
+            <ol>
+                <li>Sign up for an account through the app</li>
+                <li>Go to Supabase Dashboard > <strong>Table Editor</strong></li>
+                <li>Select the <code>admin_users</code> table</li>
+                <li>Click <strong>"Insert row"</strong></li>
+                <li>Fill in:
+                    <ul>
+                        <li><code>user_id</code>: Your user ID from auth.users table</li>
+                        <li><code>is_admin</code>: true</li>
+                    </ul>
+                </li>
+                <li>Save</li>
+            </ol>
+
+            <div class="info-box">
+                <strong>Finding Your User ID</strong>
+                <p>Go to <strong>Authentication > Users</strong> in Supabase Dashboard. Click on your user to see the UUID.</p>
+            </div>
+
+            <h3>Access Admin Panel</h3>
+            <p>After making yourself an admin, navigate to <code>/admin</code> in your app. You should see:</p>
+            <ul>
+                <li><strong>Dashboard</strong> - Overview statistics</li>
+                <li><strong>Users</strong> - Manage all users</li>
+                <li><strong>Products</strong> - Manage subscription tiers (including lifetime pricing)</li>
+                <li><strong>Subscriptions</strong> - View all subscriptions</li>
+                <li><strong>Settings</strong> - Whitelabel configuration</li>
+            </ul>
+        </section>
+
+        <!-- Section 10: Adding Products -->
+        <section id="products">
+            <h2><span class="step-number">10</span> Adding Products</h2>
+
+            <h3>Link Stripe Products to Database</h3>
+            <p>Go to <strong>Admin > Products</strong> in your app. You'll see three tiers pre-created:</p>
+            <ul>
+                <li><strong>Free</strong> - 3 funnels, no payment</li>
+                <li><strong>Pro</strong> - 25 funnels</li>
+                <li><strong>Enterprise</strong> - Unlimited funnels</li>
+            </ul>
+
+            <h3>Edit a Tier to Add Stripe IDs</h3>
+            <ol>
+                <li>Click <strong>Edit</strong> on the Pro tier</li>
+                <li>Enter the Stripe Price IDs you created earlier:
+                    <ul>
+                        <li><code>stripe_price_id_monthly</code>: price_xxx (your monthly price)</li>
+                        <li><code>stripe_price_id_yearly</code>: price_xxx (your yearly price)</li>
+                        <li><code>stripe_price_id_lifetime</code>: price_xxx (your lifetime price - optional)</li>
+                    </ul>
+                </li>
+                <li>Save changes</li>
+                <li>Repeat for Enterprise tier</li>
+            </ol>
+
+            <div class="warning-box">
+                <strong>Free Tier</strong>
+                <p>The Free tier doesn't need Stripe Price IDs - it's the default tier for new users with no payment required.</p>
+            </div>
+
+            <h3>Add a New Product (Optional)</h3>
+            <ol>
+                <li>Click <strong>"Add Product"</strong> in Admin > Products</li>
+                <li>Fill in:
+                    <ul>
+                        <li><strong>Name</strong>: e.g., "Starter"</li>
+                        <li><strong>Monthly Price</strong>: e.g., $9</li>
+                        <li><strong>Yearly Price</strong>: e.g., $90</li>
+                        <li><strong>Lifetime Price</strong>: e.g., $149 (optional)</li>
+                        <li><strong>Max Funnels</strong>: e.g., 10 (use -1 for unlimited)</li>
+                        <li><strong>Features</strong>: JSON array of feature strings</li>
+                        <li><strong>Sort Order</strong>: Display order (lower = first)</li>
+                    </ul>
+                </li>
+                <li>Create matching product in Stripe Dashboard</li>
+                <li>Add the Stripe Price IDs to your new tier</li>
+            </ol>
+
+            <h3>Test the Checkout Flow</h3>
+            <ol>
+                <li>Sign out and sign up with a new test account</li>
+                <li>Go to <strong>Profile</strong> page</li>
+                <li>Click <strong>"Upgrade to Pro"</strong></li>
+                <li>Select billing frequency (Monthly, Yearly, or Lifetime)</li>
+                <li>Use Stripe test card: <code>4242 4242 4242 4242</code></li>
+                <li>Complete checkout</li>
+                <li>Verify subscription is active in your profile</li>
+            </ol>
+
+            <div class="info-box">
+                <strong>Stripe Test Cards</strong>
+                <ul>
+                    <li>Success: <code>4242 4242 4242 4242</code></li>
+                    <li>Decline: <code>4000 0000 0000 0002</code></li>
+                    <li>Requires Auth: <code>4000 0025 0000 3155</code></li>
+                </ul>
+                <p>Use any future date for expiry and any 3 digits for CVC.</p>
+            </div>
+
+            <h3>Unauthenticated Checkout Flow (Landing Page)</h3>
+            <p>Users can purchase directly from the landing page without creating an account first. This reduces friction and increases conversions.</p>
+
+            <h4>How It Works</h4>
+            <ol>
+                <li>User clicks a paid plan on the landing page pricing section</li>
+                <li>They're redirected to Stripe Checkout (no login required)</li>
+                <li>After payment, Stripe webhook creates a <code>pending_subscription</code> entry</li>
+                <li>User is redirected to <code>/checkout/success</code> page</li>
+                <li>They create an account with the email used during checkout</li>
+                <li>The pending subscription is linked to their new account</li>
+            </ol>
+
+            <div class="purple-box">
+                <strong>Email Collision Handling</strong>
+                <p>If the checkout email already has an account, the user is prompted to log in instead of creating a new account. This prevents duplicate accounts and ensures existing users can access their purchases.</p>
+            </div>
+
+            <h3>Shared Stripe Account (Multiple Apps)</h3>
+            <p>If you use the same Stripe account for multiple apps, the webhook automatically filters events by checking if the purchased price ID exists in the <code>subscription_tiers</code> table.</p>
+            <ul>
+                <li>Events for products not in this app's database are ignored</li>
+                <li>No configuration needed - filtering happens automatically</li>
+                <li>Each app only processes its own products</li>
+            </ul>
+        </section>
+
+        <!-- Section 11: Whitelabel Branding -->
+        <section id="whitelabel">
+            <h2><span class="step-number">11</span> Whitelabel Branding</h2>
+
+            <h3>Configure via Admin Panel</h3>
+            <ol>
+                <li>Go to <strong>Admin > Settings</strong></li>
+                <li>Use the tabbed editor to customize:
+                    <ul>
+                        <li><strong>Branding</strong> - Name, tagline, colors, logos</li>
+                        <li><strong>Hero</strong> - Landing page headline and CTA</li>
+                        <li><strong>Features</strong> - Feature cards with icons</li>
+                        <li><strong>Testimonials</strong> - Customer quotes</li>
+                        <li><strong>FAQ</strong> - Frequently asked questions</li>
+                    </ul>
+                </li>
+                <li>Click <strong>"Save Changes"</strong></li>
+            </ol>
+
+            <h3>Upload Logos</h3>
+            <p>In the Branding tab:</p>
+            <ul>
+                <li><strong>Light Logo</strong> - For dark backgrounds (landing page, dark mode)</li>
+                <li><strong>Dark Logo</strong> - For light backgrounds (light mode dashboard)</li>
+                <li><strong>Favicon</strong> - Browser tab icon (recommend 32x32px)</li>
+            </ul>
+            <p>You can either enter a URL directly or upload an image file.</p>
+
+            <h3>Environment Variable Overrides</h3>
+            <p>For deployments, you can override database values with environment variables:</p>
+            <pre><code># These take precedence over database config
+VITE_BRAND_NAME="YourBrand"
+VITE_BRAND_TAGLINE="Your tagline"
+VITE_PRIMARY_COLOR="#ff5722"
+VITE_LOGO_URL="https://example.com/logo-light.png"
+VITE_LOGO_DARK_URL="https://example.com/logo-dark.png"
+VITE_FAVICON_URL="https://example.com/favicon.png"</code></pre>
+        </section>
+
+        <!-- Section 12: Deployment -->
+        <section id="deployment">
+            <h2><span class="step-number">12</span> Deployment</h2>
+
+            <h3>Option A: Vercel (Recommended)</h3>
+            <ol>
+                <li>Push your code to GitHub</li>
+                <li>Go to <a href="https://vercel.com" target="_blank">Vercel</a> and click <strong>"Import Project"</strong></li>
+                <li>Connect your GitHub repository</li>
+                <li>Add environment variables (same as your .env file)</li>
+                <li>Deploy!</li>
+            </ol>
+
+            <h4>Adding a Custom Domain on Vercel</h4>
+            <ol>
+                <li>Go to your project in Vercel Dashboard</li>
+                <li>Click <strong>Settings</strong> → <strong>Domains</strong></li>
+                <li>Enter your domain (e.g., <code>funnelsim.com</code>) and click <strong>Add</strong></li>
+                <li>Vercel will show you DNS records to add. At your domain registrar:
+                    <ul>
+                        <li><strong>For apex domain</strong> (funnelsim.com): Add an <code>A</code> record pointing to <code>76.76.21.21</code></li>
+                        <li><strong>For www subdomain</strong>: Add a <code>CNAME</code> record pointing to <code>cname.vercel-dns.com</code></li>
+                    </ul>
+                </li>
+                <li>Wait for DNS propagation (usually 5-30 minutes, can take up to 48 hours)</li>
+                <li>Vercel automatically provisions SSL certificate</li>
+            </ol>
+
+            <div class="info-box">
+                <strong>Update Supabase Auth Settings</strong>
+                <p>After adding your custom domain, go to Supabase Dashboard → Authentication → URL Configuration:</p>
+                <ul>
+                    <li><strong>Site URL</strong>: <code>https://yourdomain.com</code></li>
+                    <li><strong>Redirect URLs</strong>: Add <code>https://yourdomain.com/**</code></li>
+                </ul>
+            </div>
+
+            <h3>Option B: Netlify</h3>
+            <ol>
+                <li>Create a <code>netlify.toml</code> file:
+                    <pre><code>[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200</code></pre>
+                </li>
+                <li>Connect your repo to Netlify</li>
+                <li>Add environment variables</li>
+                <li>Deploy!</li>
+            </ol>
+
+            <h4>Adding a Custom Domain on Netlify</h4>
+            <ol>
+                <li>Go to your site in Netlify Dashboard</li>
+                <li>Click <strong>Domain settings</strong> → <strong>Add custom domain</strong></li>
+                <li>Enter your domain and click <strong>Verify</strong></li>
+                <li>At your domain registrar, add DNS records:
+                    <ul>
+                        <li><strong>For apex domain</strong>: Add an <code>A</code> record pointing to <code>75.2.60.5</code></li>
+                        <li><strong>For www</strong>: Add a <code>CNAME</code> record pointing to your Netlify site (e.g., <code>your-site.netlify.app</code>)</li>
+                    </ul>
+                </li>
+                <li>Back in Netlify, click <strong>Verify DNS configuration</strong></li>
+                <li>Enable HTTPS under <strong>Domain settings</strong> → <strong>HTTPS</strong></li>
+            </ol>
+
+            <h3>Option C: Self-Hosted</h3>
+            <pre><code># Build for production
+npm run build
+
+# The dist/ folder contains your static files
+# Serve with any web server (nginx, Apache, etc.)
+
+# Example with serve
+npm install -g serve
+serve -s dist</code></pre>
+
+            <h3>Post-Deployment Checklist</h3>
+            <div class="success-box">
+                <strong>Before Going Live</strong>
+                <ul>
+                    <li>Switch to Stripe live keys (remove <code>test</code>)</li>
+                    <li>Update webhook endpoint to production URL</li>
+                    <li>Test full checkout flow with real card</li>
+                    <li>Test lifetime checkout flow if configured</li>
+                    <li>Verify email delivery works</li>
+                    <li>Set up proper domain and SSL</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 13: Troubleshooting -->
+        <section id="troubleshooting">
+            <h2><span class="step-number">13</span> Troubleshooting</h2>
+
+            <h3>Common Issues</h3>
+
+            <h4>Checkout redirects but subscription not created</h4>
+            <p>This usually means the webhook isn't receiving or processing events:</p>
+            <ul>
+                <li>Check webhook endpoint URL is correct in Stripe Dashboard</li>
+                <li>Verify <code>STRIPE_WEBHOOK_SECRET</code> is set correctly</li>
+                <li>Check edge function logs: <code>supabase functions logs stripe-webhook</code></li>
+                <li><strong>401 errors?</strong> Redeploy with <code>--no-verify-jwt</code> flag (see below)</li>
+            </ul>
+
+            <h4>Webhook returns 401 Unauthorized</h4>
+            <p>Supabase Edge Functions require JWT authentication by default. Stripe sends webhooks without JWT tokens, causing 401 errors.</p>
+            <p><strong>Fix:</strong> Redeploy the webhook function without JWT verification:</p>
+            <pre><code>supabase functions deploy stripe-webhook --no-verify-jwt</code></pre>
+            <p>Check the edge function logs to verify it's now receiving events:</p>
+            <pre><code>supabase functions logs stripe-webhook</code></pre>
+
+            <h4>Lifetime checkout fails</h4>
+            <p>If lifetime purchases aren't working:</p>
+            <ul>
+                <li>Ensure the Stripe price is a <strong>one-time</strong> price, not recurring</li>
+                <li>Verify <code>stripe_price_id_lifetime</code> is set in the tier</li>
+                <li>Check that <code>price_lifetime</code> is greater than 0</li>
+                <li>Review webhook logs for "mode: payment" handling</li>
+            </ul>
+
+            <h4>User shows wrong subscription status after lifetime purchase</h4>
+            <p>Verify in the database:</p>
+            <ul>
+                <li>Check <code>user_subscriptions.is_lifetime</code> is <code>true</code></li>
+                <li>Verify <code>tier_id</code> matches the correct tier</li>
+                <li>Confirm <code>status</code> is <code>active</code></li>
+            </ul>
+
+            <h4>Unauthenticated checkout: User still on Free tier after purchase</h4>
+            <p>If a user purchased from the landing page but shows Free tier:</p>
+            <ol>
+                <li><strong>Check pending_subscriptions table:</strong> Verify a row exists with the session_id
+                    <pre><code>SELECT * FROM pending_subscriptions WHERE customer_email = 'user@email.com';</code></pre>
+                </li>
+                <li><strong>If no row exists:</strong> The webhook didn't fire or failed
+                    <ul>
+                        <li>Check webhook is deployed with <code>--no-verify-jwt</code></li>
+                        <li>Verify webhook signing secret is correct</li>
+                        <li>Check Stripe Dashboard > Webhooks for failed deliveries</li>
+                    </ul>
+                </li>
+                <li><strong>If row exists but status='pending':</strong> The linking step failed
+                    <ul>
+                        <li>User may have refreshed or closed the checkout success page</li>
+                        <li>Manually link by updating <code>user_subscriptions</code> with the pending data</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>Checkout success page shows "Session not found"</h4>
+            <p>The <code>retrieve-checkout-session</code> function couldn't find the Stripe session:</p>
+            <ul>
+                <li>Verify the session_id in the URL is valid</li>
+                <li>Check the <code>STRIPE_SECRET_KEY</code> is set in edge function secrets</li>
+                <li>Session may have expired (Stripe sessions expire after 24 hours)</li>
+            </ul>
+
+            <h4>RLS Policy Violations</h4>
+            <p>If you see "new row violates row-level security policy":</p>
+            <ul>
+                <li>Ensure you're logged in</li>
+                <li>For admin operations, verify you're in the <code>admin_users</code> table</li>
+                <li>Check that all migrations have been applied</li>
+            </ul>
+
+            <h4>Edge Function Errors</h4>
+            <pre><code># View edge function logs
+supabase functions logs function-name
+
+# List all secrets
+supabase secrets list
+
+# Redeploy a function
+supabase functions deploy function-name --no-verify-jwt</code></pre>
+
+            <h4>Logo Upload Fails</h4>
+            <ul>
+                <li>Ensure <code>funnel-logos</code> bucket exists and is public</li>
+                <li>Check storage policies allow authenticated uploads</li>
+                <li>Verify file is under 2MB and is an image type</li>
+            </ul>
+
+            <h4>Users Not Showing in Admin</h4>
+            <ul>
+                <li>User profile may not have been created</li>
+                <li>Run this SQL to create missing profiles:
+                    <pre><code>INSERT INTO public.profiles (id, email)
+SELECT id, email FROM auth.users
+WHERE id NOT IN (SELECT id FROM public.profiles);</code></pre>
+                </li>
+            </ul>
+
+            <h3>Getting Help</h3>
+            <ul>
+                <li><strong>Supabase Docs:</strong> <a href="https://supabase.com/docs" target="_blank">supabase.com/docs</a></li>
+                <li><strong>Stripe Docs:</strong> <a href="https://stripe.com/docs" target="_blank">stripe.com/docs</a></li>
+                <li><strong>Project Issues:</strong> <a href="https://github.com/your-username/funnelsim/issues" target="_blank">GitHub Issues</a></li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>FunnelSim Setup Manual &bull; Last updated: November 26, 2025</p>
+        </footer>
+    </div>
+</body>
+</html>

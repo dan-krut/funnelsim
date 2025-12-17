@@ -1,0 +1,4 @@
+# Supabase config - project_id is set when you run: npx supabase link --project-ref YOUR_PROJECT_ID
+
+[functions.stripe-webhook]
+verify_jwt = false

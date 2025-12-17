@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide</title>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --bg-tertiary: #1a1a24;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --border: #2d2d3d;
+            --purple: #7c3aed;
+            --green: #22c55e;
+            --orange: #f97316;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        nav {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+            border: 1px solid var(--border);
+        }
+
+        nav h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        nav ol {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+            padding-left: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h2 .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1rem;
+            margin: 1.25rem 0 0.75rem;
+            color: var(--accent);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        code {
+            background: var(--bg-tertiary);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+            color: var(--accent);
+        }
+
+        pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-primary);
+        }
+
+        .info-box {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .warning-box {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .success-box {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .tip-box {
+            background: rgba(124, 58, 237, 0.1);
+            border-left: 4px solid var(--purple);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .info-box strong, .warning-box strong, .success-box strong, .tip-box strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        td {
+            color: var(--text-secondary);
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .node-type {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .node-frontend {
+            background: var(--accent);
+            color: white;
+        }
+
+        .node-oto {
+            background: var(--green);
+            color: white;
+        }
+
+        .node-downsell {
+            background: var(--orange);
+            color: white;
+        }
+
+        .keyboard-shortcut {
+            display: inline-block;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            margin: 0 0.2rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            pre {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>User Guide</h1>
+            <p>Learn how to build, analyze, and optimize your sales funnels</p>
+        </header>
+
+        <nav>
+            <h2>Table of Contents</h2>
+            <ol>
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#dashboard">Your Dashboard</a></li>
+                <li><a href="#creating-funnels">Creating Funnels</a></li>
+                <li><a href="#node-types">Understanding Node Types</a></li>
+                <li><a href="#building-funnel">Building Your Funnel</a></li>
+                <li><a href="#traffic-sources">Traffic Sources</a></li>
+                <li><a href="#metrics">Understanding Metrics</a></li>
+                <li><a href="#optimization">Optimization Tips</a></li>
+                <li><a href="#exporting">Exporting Your Funnel</a></li>
+                <li><a href="#subscription">Managing Your Subscription</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ol>
+        </nav>
+
+        <!-- Section 1: Getting Started -->
+        <section id="getting-started">
+            <h2><span class="step-number">1</span> Getting Started</h2>
+
+            <h3>Creating Your Account</h3>
+            <ol>
+                <li>Click <strong>"Get Started"</strong> or <strong>"Sign Up"</strong> on the landing page</li>
+                <li>Enter your email address and create a password</li>
+                <li>Check your email for a verification link (if required)</li>
+                <li>Once verified, you'll be taken to your dashboard</li>
+            </ol>
+
+            <h3>Signing In</h3>
+            <p>If you already have an account:</p>
+            <ol>
+                <li>Click <strong>"Sign In"</strong></li>
+                <li>Enter your email and password</li>
+                <li>Click <strong>"Sign In"</strong> to access your dashboard</li>
+            </ol>
+
+            <h3>Resetting Your Password</h3>
+            <p>Forgot your password? No problem:</p>
+            <ol>
+                <li>Click <strong>"Forgot password?"</strong> on the sign-in page</li>
+                <li>Enter your email address</li>
+                <li>Check your email for a reset link</li>
+                <li>Click the link and enter your new password</li>
+            </ol>
+
+            <div class="info-box">
+                <strong>Your Account</strong>
+                <p>Your plan determines how many funnels you can create. Check your Profile page to see your current limits and upgrade options.</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Dashboard -->
+        <section id="dashboard">
+            <h2><span class="step-number">2</span> Your Dashboard</h2>
+
+            <p>The dashboard is your home base. Here you can see all your funnels at a glance.</p>
+
+            <h3>Dashboard Features</h3>
+            <ul>
+                <li><strong>Funnel Cards</strong> - Each funnel appears as a card showing its name and last modified date</li>
+                <li><strong>Create New Funnel</strong> - Click the "+" button or "New Funnel" to start fresh</li>
+                <li><strong>Search & Filter</strong> - Quickly find funnels by name</li>
+                <li><strong>Funnel Usage</strong> - See how many funnels you've used vs. your plan limit</li>
+            </ul>
+
+            <h3>Managing Funnels</h3>
+            <p>Click on any funnel card to open it in the builder. To delete a funnel, click the menu icon on the card and select <strong>"Delete"</strong>.</p>
+
+            <div class="warning-box">
+                <strong>Deletion is Permanent</strong>
+                <p>Deleted funnels cannot be recovered. Make sure to export your funnel before deleting if you want to keep a copy.</p>
+            </div>
+        </section>
+
+        <!-- Section 3: Creating Funnels -->
+        <section id="creating-funnels">
+            <h2><span class="step-number">3</span> Creating Funnels</h2>
+
+            <h3>Start a New Funnel</h3>
+            <ol>
+                <li>From your dashboard, click <strong>"New Funnel"</strong> or the <strong>"+"</strong> button</li>
+                <li>Enter a name for your funnel (e.g., "Product Launch Funnel")</li>
+                <li>Click <strong>"Create"</strong></li>
+                <li>You'll be taken to the funnel builder with a blank canvas</li>
+            </ol>
+
+            <h3>Renaming a Funnel</h3>
+            <p>Click on the funnel name at the top of the builder to edit it. Press <span class="keyboard-shortcut">Enter</span> or click away to save.</p>
+
+            <h3>Auto-Save</h3>
+            <p>Your work is automatically saved as you make changes. You'll see a brief "Saving..." indicator when changes are being saved.</p>
+
+            <div class="success-box">
+                <strong>Never Lose Work</strong>
+                <p>All changes are saved to the cloud automatically. You can close your browser and come back later - your funnel will be exactly as you left it.</p>
+            </div>
+        </section>
+
+        <!-- Section 4: Node Types -->
+        <section id="node-types">
+            <h2><span class="step-number">4</span> Understanding Node Types</h2>
+
+            <p>Funnels are built from nodes (steps) connected together. Each node type serves a specific purpose in your sales flow.</p>
+
+            <h3><span class="node-type node-frontend">Frontend</span> Frontend Offer</h3>
+            <p>The first offer your visitors see. This is typically your main product or lead magnet.</p>
+            <ul>
+                <li>Entry point for all traffic</li>
+                <li>Usually your lowest-priced or free offer</li>
+                <li>Goal: Convert cold traffic into buyers</li>
+            </ul>
+
+            <h3><span class="node-type node-oto">OTO</span> One-Time Offer (Upsell)</h3>
+            <p>An upsell shown to people who purchased the previous offer. Only buyers see this.</p>
+            <ul>
+                <li>Higher-priced complementary product</li>
+                <li>Shown immediately after a purchase</li>
+                <li>Goal: Increase average order value</li>
+            </ul>
+
+            <h3><span class="node-type node-downsell">Downsell</span> Downsell Offer</h3>
+            <p>A lower-priced alternative shown when someone declines an offer.</p>
+            <ul>
+                <li>Cheaper version or payment plan</li>
+                <li>Shown when visitor says "No" to an upsell</li>
+                <li>Goal: Capture sales you would have lost</li>
+            </ul>
+
+            <h3>Node Settings</h3>
+            <p>Each node has configurable settings:</p>
+            <table>
+                <tr>
+                    <th>Setting</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><strong>Name</strong></td>
+                    <td>Label for this step (e.g., "Main Course", "VIP Upgrade")</td>
+                </tr>
+                <tr>
+                    <td><strong>Price</strong></td>
+                    <td>The price of this offer in dollars</td>
+                </tr>
+                <tr>
+                    <td><strong>Conversion Rate</strong></td>
+                    <td>Expected percentage of visitors who will buy (0-100%)</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Section 5: Building Your Funnel -->
+        <section id="building-funnel">
+            <h2><span class="step-number">5</span> Building Your Funnel</h2>
+
+            <h3>Adding Nodes</h3>
+            <ol>
+                <li>Click the <strong>"Add Node"</strong> button or right-click on the canvas</li>
+                <li>Select the node type (Frontend, OTO, or Downsell)</li>
+                <li>The new node appears on the canvas</li>
+                <li>Drag it to your desired position</li>
+            </ol>
+
+            <h3>Connecting Nodes</h3>
+            <p>Nodes have connection points (handles) for creating flow:</p>
+            <ul>
+                <li><strong>Yes (Green)</strong> - Connect to the next step for buyers</li>
+                <li><strong>No (Red)</strong> - Connect to the next step for non-buyers</li>
+            </ul>
+            <p>To connect nodes:</p>
+            <ol>
+                <li>Click and drag from a handle (Yes or No) on one node</li>
+                <li>Drop onto the input handle of another node</li>
+                <li>A line appears showing the connection</li>
+            </ol>
+
+            <h3>Editing Nodes</h3>
+            <p>Click on any node to select it and edit its settings in the side panel:</p>
+            <ul>
+                <li>Change the name, price, and conversion rate</li>
+                <li>See real-time updates to your metrics</li>
+            </ul>
+
+            <h3>Deleting Nodes</h3>
+            <p>Select a node and press <span class="keyboard-shortcut">Delete</span> or <span class="keyboard-shortcut">Backspace</span>, or click the delete icon in the node settings.</p>
+
+            <h3>Deleting Connections</h3>
+            <p>Click on a connection line to select it, then press <span class="keyboard-shortcut">Delete</span> or <span class="keyboard-shortcut">Backspace</span>.</p>
+
+            <div class="tip-box">
+                <strong>Pro Tip: Typical Funnel Structure</strong>
+                <p>A common high-converting structure is: <strong>Frontend → OTO 1 → Downsell → OTO 2</strong>. The frontend captures initial buyers, OTO 1 offers an upgrade, the downsell catches those who decline, and OTO 2 offers another upgrade opportunity.</p>
+            </div>
+
+            <h3>Canvas Navigation</h3>
+            <ul>
+                <li><strong>Pan</strong> - Click and drag on empty canvas space</li>
+                <li><strong>Zoom</strong> - Use mouse scroll wheel or pinch on trackpad</li>
+                <li><strong>Fit View</strong> - Click the "Fit" button to see all nodes</li>
+            </ul>
+        </section>
+
+        <!-- Section 6: Traffic Sources -->
+        <section id="traffic-sources">
+            <h2><span class="step-number">6</span> Traffic Sources</h2>
+
+            <p>Traffic sources define where your visitors come from and how much you're paying to acquire them.</p>
+
+            <h3>Adding a Traffic Source</h3>
+            <ol>
+                <li>Find the <strong>"Traffic Sources"</strong> panel (usually on the left or in a collapsible menu)</li>
+                <li>Click <strong>"Add Traffic Source"</strong></li>
+                <li>Enter the source details:
+                    <ul>
+                        <li><strong>Name</strong> - e.g., "Facebook Ads", "Google Ads", "Email List"</li>
+                        <li><strong>Visitors</strong> - Number of visitors from this source</li>
+                        <li><strong>Cost</strong> - Total ad spend for this traffic</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Multiple Traffic Sources</h3>
+            <p>You can add multiple traffic sources to simulate blended traffic. The app will combine them and show aggregate metrics.</p>
+
+            <table>
+                <tr>
+                    <th>Source</th>
+                    <th>Visitors</th>
+                    <th>Cost</th>
+                    <th>Cost Per Visitor</th>
+                </tr>
+                <tr>
+                    <td>Facebook Ads</td>
+                    <td>1,000</td>
+                    <td>$500</td>
+                    <td>$0.50</td>
+                </tr>
+                <tr>
+                    <td>Google Ads</td>
+                    <td>500</td>
+                    <td>$400</td>
+                    <td>$0.80</td>
+                </tr>
+                <tr>
+                    <td>Email List</td>
+                    <td>2,000</td>
+                    <td>$0</td>
+                    <td>$0.00</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>3,500</strong></td>
+                    <td><strong>$900</strong></td>
+                    <td><strong>$0.26</strong></td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                <strong>Free Traffic</strong>
+                <p>For organic traffic (SEO, social media, email list), set the cost to $0. This helps you see the true profitability of paid vs. free traffic.</p>
+            </div>
+        </section>
+
+        <!-- Section 7: Understanding Metrics -->
+        <section id="metrics">
+            <h2><span class="step-number">7</span> Understanding Metrics</h2>
+
+            <p>The app calculates several key metrics to help you understand your funnel's performance.</p>
+
+            <h3>Key Metrics Explained</h3>
+            <table>
+                <tr>
+                    <th>Metric</th>
+                    <th>What It Means</th>
+                </tr>
+                <tr>
+                    <td><strong>Total Revenue</strong></td>
+                    <td>Total money generated from all offers in your funnel</td>
+                </tr>
+                <tr>
+                    <td><strong>Total Profit</strong></td>
+                    <td>Revenue minus traffic costs (what you actually keep)</td>
+                </tr>
+                <tr>
+                    <td><strong>EPC (Earnings Per Click)</strong></td>
+                    <td>Average revenue per visitor. If EPC > Cost Per Click, you're profitable.</td>
+                </tr>
+                <tr>
+                    <td><strong>ROI</strong></td>
+                    <td>Return on investment: (Profit / Cost) × 100%</td>
+                </tr>
+                <tr>
+                    <td><strong>Conversion Rate</strong></td>
+                    <td>Percentage of visitors who buy at each step</td>
+                </tr>
+            </table>
+
+            <h3>Per-Node Metrics</h3>
+            <p>Each node shows its own metrics:</p>
+            <ul>
+                <li><strong>Traffic</strong> - Number of visitors reaching this step</li>
+                <li><strong>Buyers</strong> - Number who purchase (Traffic × Conversion Rate)</li>
+                <li><strong>Revenue</strong> - Money generated (Buyers × Price)</li>
+            </ul>
+
+            <h3>Revenue Badges</h3>
+            <p>Nodes display floating badges showing revenue generated:</p>
+            <ul>
+                <li><strong style="color: var(--success);">Green</strong> - Profitable step</li>
+                <li><strong style="color: var(--error);">Red</strong> - Needs optimization</li>
+            </ul>
+
+            <h3>Sensitivity Analysis</h3>
+            <p>Hover over any node to see how a 1% increase in conversion rate would affect your total profit. This helps you identify which steps have the biggest impact.</p>
+
+            <div class="tip-box">
+                <strong>Pro Tip: Focus on High-Impact Steps</strong>
+                <p>Use sensitivity analysis to find where small improvements yield the biggest returns. Often, improving your frontend conversion by 1% has more impact than improving a downsell by 5%.</p>
+            </div>
+        </section>
+
+        <!-- Section 8: Optimization Tips -->
+        <section id="optimization">
+            <h2><span class="step-number">8</span> Optimization Tips</h2>
+
+            <h3>Benchmark Conversion Rates</h3>
+            <p>Use these as starting points, then adjust based on your actual data:</p>
+            <table>
+                <tr>
+                    <th>Offer Type</th>
+                    <th>Low</th>
+                    <th>Average</th>
+                    <th>Good</th>
+                </tr>
+                <tr>
+                    <td>Free Lead Magnet</td>
+                    <td>20%</td>
+                    <td>35%</td>
+                    <td>50%+</td>
+                </tr>
+                <tr>
+                    <td>Low-Ticket Frontend ($7-47)</td>
+                    <td>1%</td>
+                    <td>3%</td>
+                    <td>5%+</td>
+                </tr>
+                <tr>
+                    <td>OTO/Upsell</td>
+                    <td>10%</td>
+                    <td>20%</td>
+                    <td>30%+</td>
+                </tr>
+                <tr>
+                    <td>Downsell</td>
+                    <td>5%</td>
+                    <td>15%</td>
+                    <td>25%+</td>
+                </tr>
+                <tr>
+                    <td>High-Ticket ($500+)</td>
+                    <td>0.5%</td>
+                    <td>1%</td>
+                    <td>2%+</td>
+                </tr>
+            </table>
+
+            <h3>Profitable Funnel Checklist</h3>
+            <div class="success-box">
+                <strong>Your Funnel is Healthy When:</strong>
+                <ul>
+                    <li>EPC is higher than your Cost Per Click</li>
+                    <li>Total Profit is positive (green)</li>
+                    <li>Each upsell adds meaningful revenue</li>
+                    <li>Downsells are capturing lost sales</li>
+                </ul>
+            </div>
+
+            <h3>Common Optimization Strategies</h3>
+            <ol>
+                <li><strong>Lower frontend price</strong> - Get more buyers into your funnel, make profit on backend</li>
+                <li><strong>Add an order bump</strong> - Small add-on offer on checkout page (model as part of frontend)</li>
+                <li><strong>Test higher OTO prices</strong> - Buyers are in buying mode; don't leave money on the table</li>
+                <li><strong>Add a downsell</strong> - Capture 10-25% of people who say no to your upsell</li>
+                <li><strong>Reduce traffic cost</strong> - Better targeting, better ads, or organic traffic</li>
+            </ol>
+
+            <h3>Scenario Testing</h3>
+            <p>Use the app to test "what if" scenarios:</p>
+            <ul>
+                <li>What if I raised my frontend price by $10?</li>
+                <li>What if my conversion rate improved by 2%?</li>
+                <li>What if I added another upsell?</li>
+                <li>What if my ad costs doubled?</li>
+            </ul>
+            <p>Simply adjust the values and watch the metrics update in real-time.</p>
+        </section>
+
+        <!-- Section 9: Exporting -->
+        <section id="exporting">
+            <h2><span class="step-number">9</span> Exporting Your Funnel</h2>
+
+            <p>Share your funnel designs with team members, clients, or for your own records.</p>
+
+            <h3>Export as Image (PNG)</h3>
+            <ol>
+                <li>Click the <strong>"Export"</strong> button in the toolbar</li>
+                <li>Select <strong>"PNG Image"</strong></li>
+                <li>Your funnel is downloaded as a high-resolution image</li>
+            </ol>
+            <p>Best for: Quick sharing, presentations, social media</p>
+
+            <h3>Export as PDF</h3>
+            <ol>
+                <li>Click the <strong>"Export"</strong> button in the toolbar</li>
+                <li>Select <strong>"PDF Report"</strong></li>
+                <li>A professional PDF is generated with your funnel diagram and metrics</li>
+            </ol>
+            <p>Best for: Client presentations, documentation, printing</p>
+
+            <div class="info-box">
+                <strong>Sharing with Clients</strong>
+                <p>PDF exports are perfect for presenting funnel strategies to clients. They include the visual flow and key metrics in a professional format.</p>
+            </div>
+        </section>
+
+        <!-- Section 10: Subscription -->
+        <section id="subscription">
+            <h2><span class="step-number">10</span> Managing Your Subscription</h2>
+
+            <h3>Viewing Your Plan</h3>
+            <p>Go to your <strong>Profile</strong> page to see:</p>
+            <ul>
+                <li>Your current plan</li>
+                <li>Funnel usage (how many you've created vs. your limit)</li>
+                <li>Next billing date (for paid subscriptions)</li>
+            </ul>
+
+            <h3>Plan Limits</h3>
+            <p>Different plans offer different funnel limits and features. Visit the Pricing page or your Profile to see available plans and what's included in each.</p>
+
+            <h3>Upgrading Your Plan</h3>
+            <ol>
+                <li>Go to your <strong>Profile</strong> page</li>
+                <li>Click <strong>"Upgrade"</strong> on your desired plan</li>
+                <li>Choose billing frequency (Monthly, Yearly, or Lifetime)</li>
+                <li>Complete checkout securely via Stripe</li>
+                <li>Your new limits are available immediately</li>
+            </ol>
+
+            <h3>Managing Billing</h3>
+            <p>Click <strong>"Manage Subscription"</strong> to open the billing portal where you can:</p>
+            <ul>
+                <li>Update your payment method</li>
+                <li>View billing history and invoices</li>
+                <li>Change your plan</li>
+                <li>Cancel your subscription</li>
+            </ul>
+
+            <div class="tip-box">
+                <strong>Lifetime Plans</strong>
+                <p>If you purchased a lifetime plan, you have permanent access with no recurring billing. Your profile will show a "Lifetime" badge instead of a renewal date.</p>
+            </div>
+        </section>
+
+        <!-- Section 11: FAQ -->
+        <section id="faq">
+            <h2><span class="step-number">11</span> Frequently Asked Questions</h2>
+
+            <h3>Can I edit a funnel after creating it?</h3>
+            <p>Yes! Click on any funnel from your dashboard to open it. All changes are saved automatically.</p>
+
+            <h3>What happens if I reach my funnel limit?</h3>
+            <p>You'll see a prompt to upgrade your plan (if higher tiers are available). Your existing funnels remain accessible - you just can't create new ones until you upgrade or delete an existing funnel.</p>
+
+            <h3>Are my funnels private?</h3>
+            <p>Yes. Only you can see your funnels. They're stored securely in the cloud and tied to your account.</p>
+
+            <h3>Can I share a funnel with someone else?</h3>
+            <p>You can export your funnel as a PNG or PDF to share. Direct collaboration features (sharing edit access) may be available in future updates.</p>
+
+            <h3>How accurate are the projections?</h3>
+            <p>The calculations are mathematically precise based on the numbers you input. The accuracy of projections depends on how realistic your conversion rate estimates are. Start with industry benchmarks, then refine based on real data.</p>
+
+            <h3>Can I duplicate a funnel?</h3>
+            <p>This feature is coming soon. For now, you can create a new funnel and manually recreate the structure.</p>
+
+            <h3>What if I cancel my subscription?</h3>
+            <p>Your account reverts to the base plan at the end of your billing period. If you have more funnels than allowed on that plan, additional funnels become read-only until you upgrade again or delete funnels to get under the limit.</p>
+
+            <h3>How do I delete my account?</h3>
+            <p>Contact support to request account deletion. This will permanently remove all your data.</p>
+
+            <h3>Is there a mobile app?</h3>
+            <p>The app is web-based and works in any modern browser. While optimized for desktop, basic viewing works on tablets. Full funnel building is best done on a larger screen.</p>
+        </section>
+
+        <footer>
+            <p>User Guide &bull; Need help? Contact support.</p>
+        </footer>
+    </div>
+</body>
+</html>

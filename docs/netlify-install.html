@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FunnelSim - Netlify Installation Guide</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1a1a1a;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --primary: #6366f1;
+      --primary-light: #eef2ff;
+      --code-bg: #f3f4f6;
+      --success: #10b981;
+      --success-bg: #ecfdf5;
+      --warning: #f59e0b;
+      --warning-bg: #fffbeb;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0a0a0f;
+        --text: #f3f4f6;
+        --muted: #9ca3af;
+        --border: #374151;
+        --primary: #818cf8;
+        --primary-light: #1e1b4b;
+        --code-bg: #1f2937;
+        --success: #34d399;
+        --success-bg: #064e3b;
+        --warning: #fbbf24;
+        --warning-bg: #78350f;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; }
+    .subtitle { color: var(--muted); margin-bottom: 2rem; }
+    a { color: var(--primary); }
+    code {
+      background: var(--code-bg);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      font-family: 'SF Mono', Monaco, monospace;
+    }
+    pre {
+      background: var(--code-bg);
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    pre code { background: none; padding: 0; }
+    .step {
+      display: flex;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: var(--primary-light);
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+    }
+    .step-num {
+      background: var(--primary);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .step-content { flex: 1; }
+    .step-content h4 { margin-bottom: 0.5rem; }
+    .note {
+      background: var(--warning-bg);
+      border-left: 4px solid var(--warning);
+      padding: 1rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1rem 0;
+    }
+    .success {
+      background: var(--success-bg);
+      border-left: 4px solid var(--success);
+      padding: 1rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1rem 0;
+    }
+    ul, ol { margin: 1rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.5rem; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { font-weight: 600; }
+    .toc { background: var(--code-bg); padding: 1.5rem; border-radius: 8px; margin: 2rem 0; }
+    .toc h3 { margin-top: 0; }
+    .toc ol { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+  </style>
+</head>
+<body>
+
+<h1>FunnelSim - Netlify Installation Guide</h1>
+<p class="subtitle">Deploy your own FunnelSim instance on Netlify + Supabase</p>
+
+<div class="toc">
+  <h3>Contents</h3>
+  <ol>
+    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#supabase">Create Supabase Project</a></li>
+    <li><a href="#netlify">Deploy to Netlify</a></li>
+    <li><a href="#database">Set Up Database</a></li>
+    <li><a href="#edge-functions">Deploy Edge Functions</a></li>
+    <li><a href="#configure">Configure Supabase Auth</a></li>
+    <li><a href="#admin">Make Yourself Admin</a></li>
+    <li><a href="#stripe">Set Up Stripe (Optional)</a></li>
+  </ol>
+</div>
+
+<hr>
+
+<h2 id="prerequisites">1. Prerequisites</h2>
+
+<p>You'll need accounts on:</p>
+<ul>
+  <li><strong>GitHub</strong> - <a href="https://github.com" target="_blank">github.com</a></li>
+  <li><strong>Netlify</strong> - <a href="https://netlify.com" target="_blank">netlify.com</a> (free tier works)</li>
+  <li><strong>Supabase</strong> - <a href="https://supabase.com" target="_blank">supabase.com</a> (free tier works)</li>
+  <li><strong>Node.js</strong> - <a href="https://nodejs.org" target="_blank">nodejs.org</a> (for deploying Edge Functions)</li>
+</ul>
+
+<hr>
+
+<h2 id="supabase">2. Create Supabase Project</h2>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <h4>Go to Supabase Dashboard</h4>
+    <p>Visit <a href="https://supabase.com/dashboard/projects" target="_blank">supabase.com/dashboard/projects</a> and sign in.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <h4>Create New Project</h4>
+    <p>Click "New Project", choose an organization, enter a name (e.g., "funnelsim"), and set a strong database password.</p>
+    <p><strong>Save this password!</strong> You'll need it later for Edge Functions deployment.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    <h4>Wait for Setup</h4>
+    <p>Takes about 2 minutes. Once ready, go to <strong>Settings → General</strong> and note your <strong>Reference ID</strong> (Project ID).</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-content">
+    <h4>Get API Keys</h4>
+    <p>Go to <strong>Settings → API</strong> and copy:</p>
+    <ul>
+      <li><strong>Project URL</strong> (e.g., https://abcdefg.supabase.co)</li>
+      <li><strong>anon public</strong> key (starts with "eyJ...")</li>
+    </ul>
+  </div>
+</div>
+
+<hr>
+
+<h2 id="netlify">3. Deploy to Netlify</h2>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <h4>Fork the Repository</h4>
+    <p>Go to <a href="https://github.com/martincrumlish/funnelsim" target="_blank">github.com/martincrumlish/funnelsim</a> and click <strong>Fork</strong> to create a copy in your GitHub account.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <h4>Connect to Netlify</h4>
+    <p>Go to <a href="https://app.netlify.com/start" target="_blank">app.netlify.com/start</a> and:</p>
+    <ol>
+      <li>Click "Import from Git"</li>
+      <li>Choose GitHub and authorize access</li>
+      <li>Select your forked "funnelsim" repository</li>
+    </ol>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    <h4>Configure Build Settings</h4>
+    <p>Netlify should auto-detect these from <code>netlify.toml</code>, but verify:</p>
+    <ul>
+      <li><strong>Build command:</strong> <code>npm run build</code></li>
+      <li><strong>Publish directory:</strong> <code>dist</code></li>
+    </ul>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-content">
+    <h4>Add Environment Variables</h4>
+    <p>Before deploying, click "Add environment variables" and add:</p>
+    <table>
+      <tr>
+        <th>Variable</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td><code>VITE_SUPABASE_URL</code></td>
+        <td>Your Supabase Project URL</td>
+      </tr>
+      <tr>
+        <td><code>VITE_SUPABASE_PUBLISHABLE_KEY</code></td>
+        <td>Your Supabase anon key</td>
+      </tr>
+      <tr>
+        <td><code>VITE_SUPABASE_PROJECT_ID</code></td>
+        <td>Your Supabase Reference ID</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-content">
+    <h4>Deploy</h4>
+    <p>Click "Deploy site". Wait 1-2 minutes for the build to complete.</p>
+    <p>Once done, note your Netlify URL (e.g., <code>your-site-name.netlify.app</code>).</p>
+  </div>
+</div>
+
+<hr>
+
+<h2 id="database">4. Set Up Database</h2>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <h4>Open the Migrations File</h4>
+    <p>Go to your deployed site and open <code>/setup-migrations.sql</code></p>
+    <p>For example: <code>https://your-site.netlify.app/setup-migrations.sql</code></p>
+    <p>Select all and copy (Ctrl+A, Ctrl+C).</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <h4>Run in Supabase SQL Editor</h4>
+    <p>Go to your Supabase project → <strong>SQL Editor</strong> → <strong>New Query</strong></p>
+    <p>Paste the SQL and click <strong>Run</strong>.</p>
+  </div>
+</div>
+
+<div class="success">
+  <strong>Success looks like:</strong> "Success. No rows returned" - this means all tables were created correctly.
+</div>
+
+<hr>
+
+<h2 id="edge-functions">5. Deploy Edge Functions</h2>
+
+<p>Edge Functions handle payments, password resets, and other server-side operations. You need to deploy them via the Supabase CLI.</p>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <h4>Open Terminal</h4>
+    <ul>
+      <li><strong>Windows:</strong> Press Win+R, type <code>cmd</code>, press Enter</li>
+      <li><strong>Mac:</strong> Press Cmd+Space, type <code>Terminal</code>, press Enter</li>
+      <li><strong>Linux:</strong> Press Ctrl+Alt+T</li>
+    </ul>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <h4>Clone Your Fork</h4>
+    <pre><code>git clone https://github.com/YOUR_USERNAME/funnelsim.git
+cd funnelsim</code></pre>
+    <p>Replace <code>YOUR_USERNAME</code> with your GitHub username.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    <h4>Login to Supabase</h4>
+    <pre><code>npx supabase login</code></pre>
+    <p>A browser window will open. Click "Allow" to authorize, then return to terminal.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-content">
+    <h4>Link to Your Project</h4>
+    <pre><code>npx supabase link --project-ref YOUR_PROJECT_ID</code></pre>
+    <p>Replace <code>YOUR_PROJECT_ID</code> with your Supabase Reference ID.</p>
+    <p>When prompted, enter your database password.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-content">
+    <h4>Deploy Functions</h4>
+    <pre><code>npx supabase functions deploy</code></pre>
+    <p>This uploads all Edge Functions. Takes 1-2 minutes.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">6</div>
+  <div class="step-content">
+    <h4>Add Function Secrets</h4>
+    <p>Go to Supabase → <strong>Settings → Edge Functions</strong> and add these secrets:</p>
+    <table>
+      <tr>
+        <th>Secret Name</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td><code>STRIPE_SECRET_KEY</code></td>
+        <td><code>sk_test_placeholder</code> (replace later with real key)</td>
+      </tr>
+      <tr>
+        <td><code>STRIPE_WEBHOOK_SECRET</code></td>
+        <td><code>whsec_placeholder</code> (replace later with real key)</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="success">
+  <strong>Verify:</strong> Go to Supabase → Edge Functions. You should see these functions listed:
+  <ul>
+    <li>create-checkout-session</li>
+    <li>create-portal-session</li>
+    <li>stripe-webhook</li>
+    <li>send-password-reset</li>
+    <li>reset-password-with-token</li>
+  </ul>
+</div>
+
+<hr>
+
+<h2 id="configure">6. Configure Supabase Auth</h2>
+
+<p>Configure auth URLs so password reset emails link to your site.</p>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <h4>Go to Auth URL Configuration</h4>
+    <p>In Supabase, go to <strong>Authentication → URL Configuration</strong></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <h4>Update Settings</h4>
+    <table>
+      <tr>
+        <th>Setting</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td>Site URL</td>
+        <td><code>https://your-site.netlify.app</code></td>
+      </tr>
+      <tr>
+        <td>Redirect URLs</td>
+        <td>Add: <code>https://your-site.netlify.app/**</code></td>
+      </tr>
+    </table>
+    <p>Click <strong>Save</strong>.</p>
+  </div>
+</div>
+
+<hr>
+
+<h2 id="admin">7. Make Yourself Admin</h2>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <h4>Create Your Account</h4>
+    <p>Go to your Netlify site and sign up with your email.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <h4>Run Admin SQL</h4>
+    <p>In Supabase SQL Editor, run this query (replace with your email):</p>
+    <pre><code>INSERT INTO public.admin_users (user_id, is_admin)
+SELECT id, true
+FROM auth.users
+WHERE email = 'your-email@example.com'
+ON CONFLICT (user_id) DO NOTHING;</code></pre>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    <h4>Verify Admin Access</h4>
+    <p>Log out and back in. You should see a shield icon in the header - click it to access the admin dashboard.</p>
+  </div>
+</div>
+
+<hr>
+
+<h2 id="stripe">8. Set Up Stripe (Optional)</h2>
+
+<p>Skip this section if you don't need payment processing yet.</p>
+
+<h3>Create Stripe Account</h3>
+<p>Go to <a href="https://dashboard.stripe.com/register" target="_blank">dashboard.stripe.com</a> and sign up.</p>
+
+<h3>Get API Keys</h3>
+<p>In Stripe Dashboard → Developers → API Keys, copy:</p>
+<ul>
+  <li><strong>Publishable key</strong> (pk_test_...)</li>
+  <li><strong>Secret key</strong> (sk_test_...)</li>
+</ul>
+
+<h3>Add to Netlify</h3>
+<p>Go to Netlify → Site settings → Environment variables and add:</p>
+<pre><code>VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_key_here</code></pre>
+<p>Trigger a redeploy for this to take effect.</p>
+
+<h3>Update Supabase Secrets</h3>
+<p>In Supabase → Settings → Edge Functions, update:</p>
+<ul>
+  <li><code>STRIPE_SECRET_KEY</code> → your real sk_test_... key</li>
+</ul>
+
+<h3>Set Up Webhook</h3>
+<ol>
+  <li>In Stripe → Developers → Webhooks, click "Add endpoint"</li>
+  <li>URL: <code>https://YOUR_PROJECT_ID.supabase.co/functions/v1/stripe-webhook</code></li>
+  <li>Events to listen: <code>checkout.session.completed</code>, <code>customer.subscription.updated</code>, <code>customer.subscription.deleted</code></li>
+  <li>Copy the webhook signing secret (whsec_...)</li>
+  <li>Add to Supabase Edge Function secrets as <code>STRIPE_WEBHOOK_SECRET</code></li>
+</ol>
+
+<h3>Create Products</h3>
+<p>See the admin dashboard → Products section to link Stripe price IDs to subscription tiers.</p>
+
+<hr>
+
+<div class="success">
+  <h3>Setup Complete!</h3>
+  <p>Your FunnelSim instance is now running on Netlify. You can:</p>
+  <ul>
+    <li>Access your app at your Netlify URL</li>
+    <li>Manage users, subscriptions, and branding in the Admin dashboard</li>
+    <li>Customize your domain in Netlify → Domain settings</li>
+  </ul>
+</div>
+
+</body>
+</html>
