@@ -13,6 +13,13 @@ import {
 } from "@/components/ui/tooltip";
 import { formatCurrency, calculateSensitivity } from "@/lib/funnelCalculations";
 
+const BENCHMARK_HINTS: Record<string, string> = {
+  frontend: "Sales pages: 2-5% from cold traffic",
+  bump: "Order bumps: 25-35% take rate",
+  oto: "OTOs: 8-15% conversion",
+  downsell: "Downsells: 15-25% of declines",
+};
+
 // Get revenue badge color based on revenue amount
 const getRevenueBadgeColor = (revenue: number): string => {
   if (revenue >= 1000) return "bg-emerald-500 text-white"; // High profit - bright green
@@ -26,7 +33,7 @@ interface FunnelNodeData {
   name: string;
   price: number;
   conversion: number;
-  nodeType: "frontend" | "oto" | "downsell";
+  nodeType: "frontend" | "oto" | "downsell" | "bump";
   traffic?: number;
   revenue?: number;
   buyersCount?: number;
@@ -65,10 +72,11 @@ export const FunnelNode = memo(({ id, data }: NodeProps<FunnelNodeData>) => {
     return calculateSensitivity(allNodes, allEdges, trafficSources, id);
   }, [isHovering, allNodes, allEdges, trafficSources, id]);
 
-  const nodeColors = {
+  const nodeColors: Record<string, string> = {
     frontend: "border-primary/50 bg-primary/20",
     oto: "border-emerald-500/50 bg-emerald-500/20",
     downsell: "border-orange-500/50 bg-orange-500/20",
+    bump: "border-amber-500/50 bg-amber-500/20",
   };
 
   const cardContent = (
@@ -144,7 +152,7 @@ export const FunnelNode = memo(({ id, data }: NodeProps<FunnelNodeData>) => {
             )}
           </div>
 
-          <div className="space-y-1 w-20">
+          <div className="space-y-1 w-24">
             <Label className="text-xs flex items-center gap-1">
               <Percent className="h-3 w-3" />
               Conv %
@@ -162,8 +170,7 @@ export const FunnelNode = memo(({ id, data }: NodeProps<FunnelNodeData>) => {
                 value={conversion}
                 onChange={(e) => {
                   const value = e.target.value;
-                  // Limit to 3 digits before decimal
-                  if (value.replace(".", "").length > 5) return; // 3 digits + decimal + 1 decimal place
+                  if (value.replace(".", "").length > 5) return;
                   const numValue = parseFloat(value) || 0;
                   if (numValue > 100) return;
                   onUpdate?.(id, "conversion", numValue);
@@ -171,13 +178,15 @@ export const FunnelNode = memo(({ id, data }: NodeProps<FunnelNodeData>) => {
                 onInput={(e) => {
                   const input = e.target as HTMLInputElement;
                   const value = input.value;
-                  // Remove any characters beyond 3 digits (plus decimal)
                   if (value.replace(".", "").replace("-", "").length > 4) {
                     input.value = value.slice(0, -1);
                   }
                 }}
                 className="text-sm h-8 nodrag"
               />
+            )}
+            {!isExporting && BENCHMARK_HINTS[nodeType] && (
+              <p className="text-[9px] text-muted-foreground leading-tight">{BENCHMARK_HINTS[nodeType]}</p>
             )}
           </div>
         </div>

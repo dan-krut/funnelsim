@@ -24,7 +24,7 @@ const FunnelBuilder = () => {
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const { toast } = useToast();
   const canvasRef = useRef<HTMLDivElement>(null);
-  const addNodeRef = useRef<((type: "oto" | "downsell") => void) | null>(null);
+  const addNodeRef = useRef<((type: "oto" | "downsell" | "bump") => void) | null>(null);
   const exportFunctionsRef = useRef<{
     exportToPNG: () => Promise<void>;
     exportToPDF: () => Promise<void>;
@@ -285,6 +285,10 @@ const FunnelBuilder = () => {
             <Button onClick={() => addNodeRef.current?.("oto")} size="sm" variant="outline" className="gap-2">
               <Plus className="h-4 w-4" />
               Add OTO
+            </Button>
+            <Button onClick={() => addNodeRef.current?.("bump")} size="sm" variant="outline" className="gap-2">
+              <Plus className="h-4 w-4" />
+              Add Bump
             </Button>
             <Button onClick={() => addNodeRef.current?.("downsell")} size="sm" variant="outline" className="gap-2">
               <Plus className="h-4 w-4" />

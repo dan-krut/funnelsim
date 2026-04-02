@@ -162,7 +162,7 @@ interface FunnelCanvasProps {
   };
   onNameChange?: (name: string) => void;
   canvasRef?: React.RefObject<HTMLDivElement>;
-  addNodeRef?: React.MutableRefObject<((type: "oto" | "downsell") => void) | null>;
+  addNodeRef?: React.MutableRefObject<((type: "oto" | "downsell" | "bump") => void) | null>;
   exportFunctionsRef?: React.MutableRefObject<{
     exportToPNG: () => Promise<void>;
     exportToPDF: () => Promise<void>;
@@ -190,7 +190,7 @@ export const FunnelCanvas = ({ funnelId, initialData, onNameChange, canvasRef, a
   const [trafficSources, setTrafficSources] = useState<TrafficSource[]>(
     initialData?.traffic_sources && initialData.traffic_sources.length > 0
       ? initialData.traffic_sources
-      : [{ id: "1", type: "Organic", visits: 1000, cost: 0 }]
+      : [{ id: "1", type: "Facebook Ads", visits: 1000, cost: 500 }]
   );
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; clickPos: { x: number; y: number } } | null>(null);
   const [isExporting, setIsExporting] = useState(false);
@@ -304,7 +304,7 @@ export const FunnelCanvas = ({ funnelId, initialData, onNameChange, canvasRef, a
     [setNodes]
   );
 
-  const addNode = useCallback((type: "oto" | "downsell", position?: { x: number; y: number }) => {
+  const addNode = useCallback((type: "oto" | "downsell" | "bump", position?: { x: number; y: number }) => {
     const maxY = nodes.reduce((max, node) => Math.max(max, node.position.y), 0);
     const nodePosition = position || { x: 250 + Math.random() * 100, y: maxY + 150 };
 
@@ -315,14 +315,22 @@ export const FunnelCanvas = ({ funnelId, initialData, onNameChange, canvasRef, a
     // Generate a unique ID
     const newNodeId = `${type}-${Date.now()}`;
 
+    const defaults: Record<string, { name: string; price: number; conversion: number }> = {
+      oto: { name: `OTO ${nodeNumber}`, price: 97, conversion: 12 },
+      downsell: { name: `Downsell ${nodeNumber}`, price: 47, conversion: 18 },
+      bump: { name: `Order Bump ${nodeNumber}`, price: 27, conversion: 30 },
+    };
+
+    const d = defaults[type];
+
     const newNode: Node = {
       id: newNodeId,
       type: "funnelStep",
       position: nodePosition,
       data: {
-        name: type === "oto" ? `OTO ${nodeNumber}` : `Downsell ${nodeNumber}`,
-        price: type === "oto" ? 197 : 47,
-        conversion: type === "oto" ? 25 : 40,
+        name: d.name,
+        price: d.price,
+        conversion: d.conversion,
         nodeType: type,
         traffic: 0,
       },
@@ -566,16 +574,18 @@ export const FunnelCanvas = ({ funnelId, initialData, onNameChange, canvasRef, a
 
     // Helper to render a node card at a specific position
     const renderNode = (node: Node, pos: { x: number, y: number }) => {
-      const colors = {
+      const colors: Record<string, string> = {
         frontend: '#dbeafe',
         oto: '#d1fae5',
         downsell: '#fed7aa',
+        bump: '#fef3c7',
       };
 
-      const borderColors = {
+      const borderColors: Record<string, string> = {
         frontend: '#3b82f6',
         oto: '#10b981',
         downsell: '#f97316',
+        bump: '#f59e0b',
       };
 
       const nodeWidth = 240 * scale;
@@ -934,6 +944,7 @@ export const FunnelCanvas = ({ funnelId, initialData, onNameChange, canvasRef, a
           x={contextMenu.x}
           y={contextMenu.y}
           onAddOTO={() => addNode("oto", contextMenu.clickPos)}
+          onAddBump={() => addNode("bump", contextMenu.clickPos)}
           onAddDownsell={() => addNode("downsell", contextMenu.clickPos)}
           onClose={() => setContextMenu(null)}
         />

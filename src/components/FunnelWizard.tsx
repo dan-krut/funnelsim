@@ -25,7 +25,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Product {
   id: string;
-  type: "FE" | "OTO" | "Downsell";
+  type: "FE" | "OTO" | "Downsell" | "Bump";
   name: string;
   price: string;
   conversion: string;
@@ -41,6 +41,13 @@ interface FunnelWizardProps {
   userId: string | undefined;
 }
 
+const COURSE_FUNNEL_TEMPLATE: Product[] = [
+  { id: "t1", type: "FE", name: "Front End", price: "27", conversion: "3", level: 0 },
+  { id: "t2", type: "Bump", name: "Order Bump", price: "27", conversion: "30", parentId: "t1", connectionType: "buy", level: 0 },
+  { id: "t3", type: "OTO", name: "OTO 1", price: "97", conversion: "12", parentId: "t2", connectionType: "buy", level: 0 },
+  { id: "t4", type: "Downsell", name: "Downsell", price: "47", conversion: "18", parentId: "t3", connectionType: "no", level: 1 },
+];
+
 export const FunnelWizard = ({ open, onOpenChange, onBack, userId }: FunnelWizardProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -50,14 +57,53 @@ export const FunnelWizard = ({ open, onOpenChange, onBack, userId }: FunnelWizar
   ]);
   const [isCreating, setIsCreating] = useState(false);
 
+  const loadTemplate = () => {
+    setFunnelName("My Course Funnel");
+    // Generate new IDs while preserving parent references
+    const idMap = new Map<string, string>();
+    const now = Date.now();
+    COURSE_FUNNEL_TEMPLATE.forEach((p, i) => {
+      idMap.set(p.id, `${now}-${i}`);
+    });
+    setProducts(COURSE_FUNNEL_TEMPLATE.map((p, i) => ({
+      ...p,
+      id: idMap.get(p.id)!,
+      parentId: p.parentId ? idMap.get(p.parentId) : undefined,
+    })));
+  };
+
+  const addBump = () => {
+    const fe = products.find((p) => p.type === "FE");
+    if (!fe) return;
+
+    const bumpCount = products.filter((p) => p.type === "Bump").length;
+
+    const newProduct: Product = {
+      id: Date.now().toString(),
+      type: "Bump",
+      name: `Order Bump ${bumpCount + 1}`,
+      price: "",
+      conversion: "",
+      parentId: fe.id,
+      connectionType: "buy",
+      level: 0,
+    };
+
+    // Insert bump right after FE
+    const feIndex = products.findIndex((p) => p.type === "FE");
+    const newProducts = [...products];
+    newProducts.splice(feIndex + 1, 0, newProduct);
+    setProducts(newProducts);
+  };
+
   const addOTO = () => {
-    // Find the last OTO or Frontend to connect from via "buy"
+    // Find the last OTO, Bump, or Frontend to connect from via "buy"
     const lastMainProduct = [...products]
       .reverse()
-      .find((p) => p.type === "FE" || p.type === "OTO");
-    
+      .find((p) => p.type === "FE" || p.type === "OTO" || p.type === "Bump");
+
     const otoCount = products.filter((p) => p.type === "OTO").length;
-    
+
     const newProduct: Product = {
       id: Date.now().toString(),
       type: "OTO",
@@ -68,7 +114,7 @@ export const FunnelWizard = ({ open, onOpenChange, onBack, userId }: FunnelWizar
       connectionType: "buy",
       level: 0,
     };
-    
+
     setProducts([...products, newProduct]);
   };
 
@@ -180,7 +226,7 @@ export const FunnelWizard = ({ open, onOpenChange, onBack, userId }: FunnelWizar
             name: product.name,
             price: parseFloat(product.price),
             conversion: parseFloat(product.conversion),
-            nodeType: product.type === "FE" ? "frontend" : product.type.toLowerCase(),
+            nodeType: product.type === "FE" ? "frontend" : product.type === "Bump" ? "bump" : product.type.toLowerCase(),
           },
         });
         
@@ -305,6 +351,14 @@ export const FunnelWizard = ({ open, onOpenChange, onBack, userId }: FunnelWizar
         <div className="flex-1 overflow-hidden px-6">
           <ScrollArea className="h-full">
             <div className="space-y-6 pb-4 pr-4">
+              {/* Template Quick Start */}
+              <div className="bg-muted/50 border border-dashed rounded-lg p-4 text-center space-y-2">
+                <p className="text-sm text-muted-foreground">Start with a pre-built funnel template</p>
+                <Button variant="secondary" size="sm" onClick={loadTemplate}>
+                  Load Digital Product Funnel
+                </Button>
+              </div>
+
               {/* Funnel Name */}
               <div className="space-y-2">
                 <Label htmlFor="funnel-name">Funnel Name *</Label>
@@ -320,10 +374,16 @@ export const FunnelWizard = ({ open, onOpenChange, onBack, userId }: FunnelWizar
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <Label>Products *</Label>
-                <Button variant="outline" size="sm" onClick={addOTO}>
-                  <Plus className="h-4 w-4 mr-1" />
-                  Add OTO
-                </Button>
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" onClick={addBump}>
+                    <Plus className="h-4 w-4 mr-1" />
+                    Add Bump
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={addOTO}>
+                    <Plus className="h-4 w-4 mr-1" />
+                    Add OTO
+                  </Button>
+                </div>
               </div>
 
               {products.map((product, index) => (
@@ -335,7 +395,7 @@ export const FunnelWizard = ({ open, onOpenChange, onBack, userId }: FunnelWizar
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium text-muted-foreground">
-                        {product.type === "FE" ? "Frontend" : product.type === "OTO" ? "OTO" : "Downsell"}
+                        {product.type === "FE" ? "Frontend" : product.type === "OTO" ? "OTO" : product.type === "Bump" ? "Order Bump" : "Downsell"}
                       </span>
                       {product.connectionType && (
                         <span className="text-xs text-muted-foreground">

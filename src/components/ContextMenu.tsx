@@ -6,10 +6,11 @@ interface ContextMenuProps {
   y: number;
   onAddOTO: () => void;
   onAddDownsell: () => void;
+  onAddBump: () => void;
   onClose: () => void;
 }
 
-export const ContextMenu = ({ x, y, onAddOTO, onAddDownsell, onClose }: ContextMenuProps) => {
+export const ContextMenu = ({ x, y, onAddOTO, onAddDownsell, onAddBump, onClose }: ContextMenuProps) => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,6 +44,15 @@ export const ContextMenu = ({ x, y, onAddOTO, onAddDownsell, onClose }: ContextM
           className="w-full text-left px-3 py-2 text-sm hover:bg-muted/50 rounded transition-colors"
         >
           Add OTO
+        </button>
+        <button
+          onClick={() => {
+            onAddBump();
+            onClose();
+          }}
+          className="w-full text-left px-3 py-2 text-sm hover:bg-muted/50 rounded transition-colors"
+        >
+          Add Order Bump
         </button>
         <button
           onClick={() => {

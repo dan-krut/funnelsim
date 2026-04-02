@@ -185,14 +185,13 @@ export const Hero: React.FC = () => {
               <X className="w-6 h-6" />
             </button>
 
-            {/* Video Embed */}
-            <iframe
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-              title={`${config.brand_name || 'FunnelSim'} Demo`}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
+            {/* Demo placeholder */}
+            <div className="w-full h-full flex items-center justify-center bg-[#0a0a0f]">
+              <div className="text-center space-y-4">
+                <PlayCircle className="w-16 h-16 text-indigo-400 mx-auto opacity-50" />
+                <p className="text-slate-400 text-lg">Demo video coming soon</p>
+              </div>
+            </div>
           </div>
         </div>
       )}

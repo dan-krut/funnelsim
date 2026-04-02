@@ -48,16 +48,10 @@ export const CTA: React.FC = () => {
             </a>
           </div>
 
-          {/* Trust Indicators */}
-          <div className="mt-12 pt-10 border-t border-white/5 flex flex-wrap justify-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-            <p className="w-full text-center text-xs font-mono uppercase tracking-widest mb-2 text-slate-600">Trusted by teams at</p>
-            <div className="flex items-center space-x-8 md:space-x-12">
-              <span className="text-lg font-display font-bold text-slate-500">Acme Corp</span>
-              <span className="text-lg font-display font-bold text-slate-500">GlobalScale</span>
-              <span className="text-lg font-display font-bold text-slate-500">FunnelHacks</span>
-              <span className="text-lg font-display font-bold text-slate-500">Growth.io</span>
-            </div>
-          </div>
+          {/* Trust Indicator */}
+          <p className="mt-12 pt-10 border-t border-white/5 text-center text-sm text-slate-500">
+            Join course creators who plan before they launch.
+          </p>
         </div>
       </div>
     </section>
