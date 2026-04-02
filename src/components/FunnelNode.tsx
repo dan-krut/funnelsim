@@ -118,7 +118,7 @@ export const FunnelNode = memo(({ id, data }: NodeProps<FunnelNodeData>) => {
           )}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-start gap-2">
           <div className="space-y-1 flex-1">
             <Label className="text-xs flex items-center gap-1">
               <DollarSign className="h-3 w-3" />
@@ -152,7 +152,7 @@ export const FunnelNode = memo(({ id, data }: NodeProps<FunnelNodeData>) => {
             )}
           </div>
 
-          <div className="space-y-1 w-24">
+          <div className="space-y-1 w-20">
             <Label className="text-xs flex items-center gap-1">
               <Percent className="h-3 w-3" />
               Conv %

@@ -96,6 +96,34 @@ const Auth = () => {
         variant: "destructive",
       });
     } else {
+      // Check for plan upgrade param
+      const plan = searchParams.get('plan');
+      if (plan === 'creator') {
+        try {
+          // Get the current user
+          const { data: { user: newUser } } = await supabase.auth.getUser();
+          if (newUser) {
+            // Find the Course Creator tier
+            const { data: tier } = await supabase
+              .from('subscription_tiers')
+              .select('id')
+              .eq('name', 'Course Creator')
+              .limit(1)
+              .single();
+
+            if (tier) {
+              // Update user's subscription from Free to Course Creator
+              await supabase
+                .from('user_subscriptions')
+                .update({ tier_id: tier.id, is_lifetime: true })
+                .eq('user_id', newUser.id);
+            }
+          }
+        } catch (err) {
+          console.error('Error upgrading plan:', err);
+        }
+      }
+
       toast({
         title: "Account created!",
         description: `Welcome to ${config.brand_name || 'Funnel Builder'}`,

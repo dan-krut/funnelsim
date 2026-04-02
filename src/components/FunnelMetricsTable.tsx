@@ -42,7 +42,7 @@ export const FunnelMetricsTable = ({
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <Card className="absolute bottom-4 left-4 p-4 bg-card border-border shadow-lg z-10 w-[450px] overflow-hidden">
+      <Card className="p-4 bg-card border-border shadow-lg w-full overflow-hidden">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
             <DollarSign className="h-4 w-4 text-green-600" />

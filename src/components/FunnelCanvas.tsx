@@ -962,21 +962,22 @@ export const FunnelCanvas = ({ funnelId, initialData, onNameChange, canvasRef, a
       )}
 
       <div className="flex-1 bg-card relative" ref={reactFlowWrapper}>
-        <div className={isExporting ? "hidden" : ""}>
-          <TrafficInput
-            sources={trafficSources}
-            onSourcesChange={setTrafficSources}
-          />
-        </div>
-
-        <div ref={metricsTableRef}>
-          <FunnelMetricsTable
-            steps={stepMetrics}
-            totalTraffic={totalVisits}
-            totalRevenue={totalRevenue}
-            cost={totalCost}
-          />
-        </div>
+        {!isExporting && (
+          <div className="absolute top-4 left-4 z-10 w-[420px] max-h-[calc(100%-2rem)] overflow-y-auto space-y-3 pr-1">
+            <TrafficInput
+              sources={trafficSources}
+              onSourcesChange={setTrafficSources}
+            />
+            <div ref={metricsTableRef}>
+              <FunnelMetricsTable
+                steps={stepMetrics}
+                totalTraffic={totalVisits}
+                totalRevenue={totalRevenue}
+                cost={totalCost}
+              />
+            </div>
+          </div>
+        )}
 
         {/* Breakeven Panel - top right */}
         {!isExporting && (
