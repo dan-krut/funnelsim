@@ -251,11 +251,15 @@ const Auth = () => {
         <Card className="w-full max-w-md">
           <CardHeader className="space-y-1">
             <div className="flex justify-center mb-2">
-              <img
-                src={theme === "dark" ? (config.logo_dark_url || defaultLogoDark) : (config.logo_light_url || defaultLogo)}
-                alt={config.brand_name || "Funnel Profit Planner"}
-                className="h-12"
-              />
+              {config.logo_light_url || config.logo_dark_url ? (
+                <img
+                  src={theme === "dark" ? (config.logo_dark_url || config.logo_light_url) : (config.logo_light_url || config.logo_dark_url)}
+                  alt={config.brand_name || "Course Visionary"}
+                  className="h-12"
+                />
+              ) : (
+                <span className="text-2xl font-bold text-foreground">{config.brand_name || "Course Visionary"}</span>
+              )}
             </div>
             <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 text-center">
               <p className="text-sm font-semibold text-emerald-400">Course Creator Plan Included</p>
@@ -289,11 +293,15 @@ const Auth = () => {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <div className="flex justify-center mb-4">
-            <img
-              src={theme === "dark" ? (config.logo_dark_url || defaultLogoDark) : (config.logo_light_url || defaultLogo)}
-              alt={config.brand_name || "Funnel Builder"}
-              className="h-12"
-            />
+            {config.logo_light_url || config.logo_dark_url ? (
+              <img
+                src={theme === "dark" ? (config.logo_dark_url || config.logo_light_url) : (config.logo_light_url || config.logo_dark_url)}
+                alt={config.brand_name || "Course Visionary"}
+                className="h-12"
+              />
+            ) : (
+              <span className="text-2xl font-bold text-foreground">{config.brand_name || "Course Visionary"}</span>
+            )}
           </div>
           <CardDescription className="text-center">
             Create, save, and manage your conversion funnels
