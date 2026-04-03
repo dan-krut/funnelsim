@@ -10,8 +10,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useWhitelabel } from "@/hooks/useWhitelabel";
-import logo from "@/assets/logo.png";
-import logoDark from "@/assets/logo-dark.png";
+import defaultLogo from "@/assets/logo.png";
+import defaultLogoDark from "@/assets/logo-dark.png";
 import { useTheme } from "next-themes";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
@@ -252,7 +252,7 @@ const Auth = () => {
           <CardHeader className="space-y-1">
             <div className="flex justify-center mb-2">
               <img
-                src={theme === "dark" ? (config.logo_dark_url || logoDark) : (config.logo_light_url || logo)}
+                src={theme === "dark" ? (config.logo_dark_url || defaultLogoDark) : (config.logo_light_url || defaultLogo)}
                 alt={config.brand_name || "Funnel Profit Planner"}
                 className="h-12"
               />
@@ -290,7 +290,7 @@ const Auth = () => {
         <CardHeader className="space-y-1">
           <div className="flex justify-center mb-4">
             <img
-              src={theme === "dark" ? (config.logo_dark_url || logoDark) : (config.logo_light_url || logo)}
+              src={theme === "dark" ? (config.logo_dark_url || defaultLogoDark) : (config.logo_light_url || defaultLogo)}
               alt={config.brand_name || "Funnel Builder"}
               className="h-12"
             />
