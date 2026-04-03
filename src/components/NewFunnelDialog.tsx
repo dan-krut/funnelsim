@@ -93,7 +93,7 @@ export const NewFunnelDialog = ({ open, onOpenChange, onCreateBlank, userId }: N
         <div className="grid gap-3 py-4">
           <Button
             variant="outline"
-            className="h-auto flex-col items-start gap-2 p-4 hover:bg-emerald-500/5 hover:border-emerald-500/30 border-emerald-500/20 bg-emerald-500/5"
+            className="h-auto flex-col items-start gap-2 p-4 border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20"
             onClick={createFromTemplate}
             disabled={creating}
           >

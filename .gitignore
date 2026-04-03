@@ -40,3 +40,4 @@ supabase/.temp/
 # Customer setup output files
 customer-*.txt
 scripts/customer-setup.ps1
+.vercel
