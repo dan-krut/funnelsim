@@ -14,10 +14,10 @@ import {
 import { formatCurrency, calculateSensitivity } from "@/lib/funnelCalculations";
 
 const BENCHMARK_HINTS: Record<string, string> = {
-  frontend: "Sales pages: 2-5% from cold traffic",
-  bump: "Order bumps: 25-35% take rate",
-  oto: "OTOs: 8-15% conversion",
-  downsell: "Downsells: 15-25% of declines",
+  frontend: "Avg: 2-5%",
+  bump: "Avg: 25-35%",
+  oto: "Avg: 8-15%",
+  downsell: "Avg: 15-25%",
 };
 
 // Get revenue badge color based on revenue amount

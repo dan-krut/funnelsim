@@ -355,13 +355,17 @@ const DashboardContent = () => {
     <div className="min-h-screen bg-background">
       <header className="border-b sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <img
+          {config.logo_light_url || config.logo_dark_url ? (
+            <img
               src={theme === "dark"
-                ? (config.logo_dark_url || logoDark)
-                : (config.logo_light_url || logo)}
+                ? (config.logo_dark_url || config.logo_light_url)
+                : (config.logo_light_url || config.logo_dark_url)}
               alt={config.brand_name || "Funnel Builder"}
               className="h-8"
             />
+          ) : (
+            <span className="text-lg font-bold text-foreground">{config.brand_name || "Funnel Profit Planner"}</span>
+          )}
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground hidden sm:inline">{user?.email}</span>
             {isAdmin && (
@@ -400,7 +404,7 @@ const DashboardContent = () => {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h2 className="text-3xl font-bold tracking-tight">Your Funnels</h2>
-            <p className="text-muted-foreground">View and manage all your conversion funnels</p>
+            <p className="text-muted-foreground">Plan and model your funnels before you launch</p>
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto">
@@ -462,7 +466,7 @@ const DashboardContent = () => {
                 <p className="text-muted-foreground max-w-sm mx-auto">
                   {searchQuery
                     ? `No funnels match "${searchQuery}"`
-                    : "Create your first funnel to start tracking conversions"}
+                    : "Plan your course funnel and see if the numbers work before you launch"}
                 </p>
                 {searchQuery ? (
                   <Button onClick={clearSearch} variant="outline">

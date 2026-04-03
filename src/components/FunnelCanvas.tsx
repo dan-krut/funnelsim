@@ -596,24 +596,25 @@ export const FunnelCanvas = ({ funnelId, initialData, onNameChange, canvasRef, a
           position: absolute;
           left: ${pos.x}px;
           top: ${pos.y}px;
-          background: ${colors[node.data.nodeType as keyof typeof colors]};
-          border: 2px solid ${borderColors[node.data.nodeType as keyof typeof borderColors]};
+          background: ${colors[node.data.nodeType as keyof typeof colors] || '#f1f5f9'};
+          border: 2px solid ${borderColors[node.data.nodeType as keyof typeof borderColors] || '#94a3b8'};
           border-radius: 8px;
           padding: ${16 * scale}px;
           width: ${nodeWidth}px;
           box-sizing: border-box;
+          color: #0f172a;
         ">
-          <div style="font-weight: 600; font-size: ${15 * scale}px; margin-bottom: ${12 * scale}px; text-align: center;">
+          <div style="font-weight: 700; font-size: ${15 * scale}px; margin-bottom: ${12 * scale}px; text-align: center; color: #0f172a;">
             ${node.data.name}
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: ${12 * scale}px;">
             <div>
-              <div style="font-size: ${10 * scale}px; color: #64748b; margin-bottom: ${4 * scale}px;">Price</div>
-              <div style="font-weight: 500; font-size: ${14 * scale}px;">$${node.data.price}</div>
+              <div style="font-size: ${10 * scale}px; color: #475569; margin-bottom: ${4 * scale}px; font-weight: 600;">Price</div>
+              <div style="font-weight: 700; font-size: ${14 * scale}px; color: #0f172a;">$${node.data.price}</div>
             </div>
             <div>
-              <div style="font-size: ${10 * scale}px; color: #64748b; margin-bottom: ${4 * scale}px;">Conv %</div>
-              <div style="font-weight: 500; font-size: ${14 * scale}px;">${node.data.conversion}%</div>
+              <div style="font-size: ${10 * scale}px; color: #475569; margin-bottom: ${4 * scale}px; font-weight: 600;">Conv %</div>
+              <div style="font-weight: 700; font-size: ${14 * scale}px; color: #0f172a;">${node.data.conversion}%</div>
             </div>
           </div>
         </div>
@@ -677,7 +678,7 @@ export const FunnelCanvas = ({ funnelId, initialData, onNameChange, canvasRef, a
     const totalHeight = scaledHeight + 160;
     let html = `
       <div style="max-width: 1160px;">
-        <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 24px; color: #0f172a;">
+        <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 24px; color: #0f172a; font-weight: 800;">
           Funnel Structure
         </h1>
         <div style="position: relative; height: ${totalHeight}px; margin-bottom: 40px;">
@@ -700,71 +701,71 @@ export const FunnelCanvas = ({ funnelId, initialData, onNameChange, canvasRef, a
           </div>
         </div>
 
-        <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 16px; color: #0f172a;">
+        <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 16px; color: #0f172a; font-weight: 800;">
           Traffic Sources
         </h2>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 40px; font-size: 14px;">
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 40px; font-size: 14px; color: #0f172a;">
           <thead>
-            <tr style="background: #f1f5f9;">
-              <th style="padding: 12px; text-align: left; border: 1px solid #e2e8f0;">Type</th>
-              <th style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">Visits</th>
-              <th style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">Cost</th>
+            <tr style="background: #1e293b; color: #ffffff;">
+              <th style="padding: 12px; text-align: left; border: 1px solid #334155;">Type</th>
+              <th style="padding: 12px; text-align: right; border: 1px solid #334155;">Visits</th>
+              <th style="padding: 12px; text-align: right; border: 1px solid #334155;">Cost</th>
             </tr>
           </thead>
           <tbody>
             ${trafficSources.map(source => `
               <tr>
-                <td style="padding: 12px; border: 1px solid #e2e8f0;">${source.type}</td>
-                <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">${source.visits.toLocaleString()}</td>
-                <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">$${source.cost.toLocaleString()}</td>
+                <td style="padding: 12px; border: 1px solid #e2e8f0; color: #0f172a;">${source.type}</td>
+                <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0; color: #0f172a;">${source.visits.toLocaleString()}</td>
+                <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0; color: #0f172a;">$${source.cost.toLocaleString()}</td>
               </tr>
             `).join('')}
-            <tr style="background: #f8fafc; font-weight: 600;">
-              <td style="padding: 12px; border: 1px solid #e2e8f0;">Total</td>
-              <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">${totalVisits.toLocaleString()}</td>
-              <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">$${totalCost.toLocaleString()}</td>
+            <tr style="background: #f1f5f9; font-weight: 600;">
+              <td style="padding: 12px; border: 1px solid #e2e8f0; color: #0f172a;">Total</td>
+              <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0; color: #0f172a;">${totalVisits.toLocaleString()}</td>
+              <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0; color: #0f172a;">$${totalCost.toLocaleString()}</td>
             </tr>
           </tbody>
         </table>
 
-        <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 16px; color: #0f172a;">
+        <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 16px; color: #0f172a; font-weight: 800;">
           Funnel Metrics
         </h2>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px;">
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; color: #0f172a;">
           <thead>
-            <tr style="background: #f1f5f9;">
-              <th style="padding: 12px; text-align: left; border: 1px solid #e2e8f0;">Step</th>
-              <th style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">Conversions</th>
-              <th style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">Revenue</th>
-              <th style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">EPC</th>
+            <tr style="background: #1e293b; color: #ffffff;">
+              <th style="padding: 12px; text-align: left; border: 1px solid #334155;">Step</th>
+              <th style="padding: 12px; text-align: right; border: 1px solid #334155;">Conversions</th>
+              <th style="padding: 12px; text-align: right; border: 1px solid #334155;">Revenue</th>
+              <th style="padding: 12px; text-align: right; border: 1px solid #334155;">EPC</th>
             </tr>
           </thead>
           <tbody>
             ${stepMetrics.map(metric => `
               <tr>
-                <td style="padding: 12px; border: 1px solid #e2e8f0;">${metric.name}</td>
-                <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">${metric.conversions.toLocaleString()}</td>
-                <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">$${metric.revenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">$${metric.epc.toFixed(2)}</td>
+                <td style="padding: 12px; border: 1px solid #e2e8f0; color: #0f172a;">${metric.name}</td>
+                <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0; color: #0f172a;">${metric.conversions.toLocaleString()}</td>
+                <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0; color: #0f172a;">$${metric.revenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0; color: #0f172a;">$${metric.epc.toFixed(2)}</td>
               </tr>
             `).join('')}
-            <tr style="background: #f8fafc; font-weight: 600;">
-              <td style="padding: 12px; border: 1px solid #e2e8f0;">Sub Total</td>
+            <tr style="background: #f1f5f9; font-weight: 600;">
+              <td style="padding: 12px; border: 1px solid #e2e8f0; color: #0f172a;">Sub Total</td>
               <td style="padding: 12px; border: 1px solid #e2e8f0;"></td>
-              <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">$${totalRevenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-              <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">$${(totalRevenue / totalVisits).toFixed(2)}</td>
+              <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0; color: #0f172a;">$${totalRevenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+              <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0; color: #0f172a;">$${(totalRevenue / totalVisits).toFixed(2)}</td>
             </tr>
-            <tr style="color: #dc2626;">
-              <td style="padding: 12px; border: 1px solid #e2e8f0;">Costs</td>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #e2e8f0; color: #dc2626; font-weight: 600;">Costs</td>
               <td style="padding: 12px; border: 1px solid #e2e8f0;"></td>
-              <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">-$${totalCost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+              <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0; color: #dc2626; font-weight: 600;">-$${totalCost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
               <td style="padding: 12px; border: 1px solid #e2e8f0;"></td>
             </tr>
             <tr style="background: #dcfce7; font-weight: 700; font-size: 16px;">
-              <td style="padding: 12px; border: 1px solid #e2e8f0;">Total Profit</td>
-              <td style="padding: 12px; border: 1px solid #e2e8f0;"></td>
-              <td style="padding: 12px; text-align: right; border: 1px solid #e2e8f0; color: #16a34a;">$${(totalRevenue - totalCost).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-              <td style="padding: 12px; border: 1px solid #e2e8f0;"></td>
+              <td style="padding: 12px; border: 1px solid #bbf7d0; color: #0f172a;">Total Profit</td>
+              <td style="padding: 12px; border: 1px solid #bbf7d0;"></td>
+              <td style="padding: 12px; text-align: right; border: 1px solid #bbf7d0; color: #16a34a;">$${(totalRevenue - totalCost).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+              <td style="padding: 12px; border: 1px solid #bbf7d0;"></td>
             </tr>
           </tbody>
         </table>
@@ -986,6 +987,18 @@ export const FunnelCanvas = ({ funnelId, initialData, onNameChange, canvasRef, a
             totalRevenue={totalRevenue}
             totalTraffic={totalVisits}
             epc={debouncedAnalytics.epc}
+            scenarioRevenues={(() => {
+              const makeScenario = (multiplier: number) => {
+                const modNodes = nodes.map(n => ({
+                  id: n.id,
+                  data: { ...n.data, conversion: Math.min((n.data.conversion || 0) * multiplier, 100) },
+                }));
+                const simEdges = edges.map(e => ({ source: e.source, target: e.target, sourceHandle: e.sourceHandle }));
+                const simTraffic = trafficSources.map(s => ({ visits: s.visits, cost: s.cost }));
+                return calculateFunnelMetricsWithDetails(modNodes, simEdges, simTraffic).totalRevenue;
+              };
+              return { pessimistic: makeScenario(0.5), optimistic: makeScenario(1.67) };
+            })()}
           />
         )}
 

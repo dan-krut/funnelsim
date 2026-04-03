@@ -22,6 +22,13 @@ const FunnelBuilder = () => {
   const [saved, setSaved] = useState(false);
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(() => {
+    if (localStorage.getItem('fpp_show_welcome') === 'true') {
+      localStorage.removeItem('fpp_show_welcome');
+      return true;
+    }
+    return false;
+  });
   const { toast } = useToast();
   const canvasRef = useRef<HTMLDivElement>(null);
   const addNodeRef = useRef<((type: "oto" | "downsell" | "bump") => void) | null>(null);
@@ -298,6 +305,24 @@ const FunnelBuilder = () => {
           </div>
         </div>
       </header>
+      {showWelcome && (
+        <div className="bg-emerald-500/10 border-b border-emerald-500/20 px-4 py-3">
+          <div className="max-w-4xl mx-auto flex items-start justify-between gap-4">
+            <div className="text-sm space-y-1">
+              <p className="font-semibold text-emerald-400">Your course funnel is ready.</p>
+              <p className="text-muted-foreground">
+                <strong>Left:</strong> Your traffic (visitors and ad spend).{" "}
+                <strong>Center:</strong> Your funnel steps (adjust prices and conversion rates).{" "}
+                <strong>Right:</strong> Your profit (see if the math works before you launch).
+              </p>
+              <p className="text-muted-foreground">Change any number to see how it affects your profit.</p>
+            </div>
+            <Button variant="outline" size="sm" className="shrink-0" onClick={() => setShowWelcome(false)}>
+              Got it
+            </Button>
+          </div>
+        </div>
+      )}
       <ReactFlowProvider>
         <FunnelCanvas
           funnelId={id}
