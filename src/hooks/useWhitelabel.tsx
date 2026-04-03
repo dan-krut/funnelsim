@@ -13,8 +13,8 @@ import type {
  */
 const DEFAULT_CONFIG: WhitelabelConfigData = {
   id: '',
-  brand_name: 'Funnel Profit Planner',
-  tagline: 'Plan your course funnel profitability before spending a dollar on ads',
+  brand_name: 'Course Visionary',
+  tagline: 'Create, save, and manage your conversion funnels',
   primary_color: '#6366f1',
   logo_light_url: null,
   logo_dark_url: null,
