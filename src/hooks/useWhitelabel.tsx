@@ -13,8 +13,8 @@ import type {
  */
 const DEFAULT_CONFIG: WhitelabelConfigData = {
   id: '',
-  brand_name: 'FunnelSim',
-  tagline: 'The standard for funnel modeling and simulation',
+  brand_name: 'Funnel Profit Planner',
+  tagline: 'Plan your course funnel profitability before spending a dollar on ads',
   primary_color: '#6366f1',
   logo_light_url: null,
   logo_dark_url: null,
@@ -27,7 +27,7 @@ const DEFAULT_CONFIG: WhitelabelConfigData = {
   testimonials: null,
   faq: null,
   footer_text: 'The standard for funnel modeling and simulation. Built for marketers who demand data over guesswork.',
-  email_sender_name: 'FunnelSim',
+  email_sender_name: 'Funnel Profit Planner',
   updated_at: null,
 };
 
